@@ -13,9 +13,8 @@ class ReviewController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['title'] = 'Reviews - PIXEL PLAZA';
-        $viewData['subtitle'] = 'List of reviews';
         $viewData['reviews'] = Review::all();
+        $viewData['success'] = session('viewData.success');
 
         return view('review.index')->with('viewData', $viewData);
     }
@@ -29,8 +28,6 @@ class ReviewController extends Controller
             $viewData['objectType'] = "Review";
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
-        $viewData['title'] = 'Review #'.$id.' - PIXEL PLAZA';
-        $viewData['subtitle'] = 'Review #'.$id.' - Review information';
         $viewData['review'] = $review;
 
         return view('review.show')->with('viewData', $viewData);
@@ -38,11 +35,7 @@ class ReviewController extends Controller
 
     public function create(): View
     {
-        $viewData = [];
-        $viewData['title'] = 'Create review';
-        $viewData['subtitle'] = 'Create a new review';
-
-        return view('review.create')->with('viewData', $viewData);
+        return view('review.create');
     }
 
     public function save(Request $request): RedirectResponse
@@ -51,21 +44,17 @@ class ReviewController extends Controller
 
         Review::create($request->only(['rating', 'comment', 'game', 'client']));
 
-        return redirect()->route('review.success');
+        session()->flash('viewData.success', 'Review created successfully.');
+        return redirect()->route('review.index');
     }
 
     public function success(): View
     {
-        $viewData = [];
-        $viewData['title'] = 'Review created successfully';
-        $viewData['subtitle'] = 'Review created successfully';
-
-        return view('review.success')->with('viewData', $viewData);
+        return view('review.success');
     }
 
     public function destroy(string $id): RedirectResponse
     {
-        $viewData = [];
         try {
             Review::findOrFail($id)->delete();
         } catch (Exception $e) {
@@ -73,6 +62,7 @@ class ReviewController extends Controller
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
 
+        session()->flash('viewData.success', 'Review deleted successfully.');
         return redirect()->route('review.index');
     }
 }
