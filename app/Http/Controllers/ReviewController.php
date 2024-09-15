@@ -26,7 +26,8 @@ class ReviewController extends Controller
         try {
             $review = Review::findOrFail($id);
         } catch (Exception $e) {
-            return redirect()->route('review.nonexistent');
+            $viewData['objectType'] = "Review";
+            return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
         $viewData['title'] = 'Review #'.$id.' - PIXEL PLAZA';
         $viewData['subtitle'] = 'Review #'.$id.' - Review information';
@@ -62,21 +63,14 @@ class ReviewController extends Controller
         return view('review.success')->with('viewData', $viewData);
     }
 
-    public function nonexistent(): View
-    {
-        $viewData = [];
-        $viewData['title'] = 'Review not found';
-        $viewData['subtitle'] = 'Review not found';
-
-        return view('review.nonexistent')->with('viewData', $viewData);
-    }
-
     public function destroy(string $id): RedirectResponse
     {
+        $viewData = [];
         try {
             Review::findOrFail($id)->delete();
         } catch (Exception $e) {
-            return redirect()->route('review.nonexistent');
+            $viewData['objectType'] = "Review";
+            return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
 
         return redirect()->route('review.index');

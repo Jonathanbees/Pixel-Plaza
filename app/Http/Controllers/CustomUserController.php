@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomUser;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -37,10 +38,15 @@ class CustomUserController extends Controller
         return redirect()->route('custom-users.index')->with('success', 'User created successfully.');
     }
 
-    public function show(int $id): View
+    public function show(int $id): View|RedirectResponse
     {
         $viewData = [];
-        $user = CustomUser::findOrFail($id);
+        try {
+            $user = CustomUser::findOrFail($id);
+        } catch (Exception $e) {
+            $viewData['objectType'] = "Custom User";
+            return redirect()->route('error.nonexistent')->with('viewData', $viewData);
+        }
         $viewData['title'] = 'Custom User #'.$id.' - PIXEL PLAZA';
         $viewData['subtitle'] = 'Custom User #'.$id.' - User information';
         $viewData['user'] = $user;
@@ -50,8 +56,13 @@ class CustomUserController extends Controller
 
     public function destroy(int $id): RedirectResponse
     {
-        $user = CustomUser::findOrFail($id);
-        $user->delete();
+        $viewData = [];
+        try {
+            CustomUser::findOrFail($id)->delete();
+        } catch (Exception $e) {
+            $viewData['objectType'] = "Custom User";
+            return redirect()->route('error.nonexistent')->with('viewData', $viewData);
+        }
 
         return redirect()->route('custom-users.index')->with('success', 'User deleted successfully.');
     }
