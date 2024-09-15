@@ -18,7 +18,7 @@
                 @foreach ($viewData['games'] as $game)
                 <tr>
                     <td>{{ $game->getId() }}</td>
-                    <td>{{ $game->getName() }}</td>
+                    <td><a href="{{ route('game.show', ['id' => $game->getId()]) }}">{{ $game->getName() }}</a></td>
                     <td>{{ $game->getPrice() }}</td>
                 </tr>
                 @endforeach

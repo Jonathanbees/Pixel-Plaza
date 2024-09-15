@@ -50,11 +50,6 @@ class GameController extends Controller
         return redirect()->route('game.index');
     }
 
-    public function success(): View
-    {
-        return view('game.success');
-    }
-
     public function destroy(string $id): RedirectResponse
     {
         try {
@@ -84,7 +79,9 @@ class GameController extends Controller
     public function addToShoppingCart(string $id): RedirectResponse
     {
         $cart = session()->get('cart', []);
-        $cart[] = $id;
+        if (!in_array($id, $cart)) {
+            $cart[] = $id;
+        }
         session()->put('cart', $cart);
 
         return redirect()->route('game.index');

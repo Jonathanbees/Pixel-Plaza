@@ -18,16 +18,16 @@ Route::post('/categories/save', 'App\Http\Controllers\CategoryController@save')-
 Route::get('/categories/{id}', 'App\Http\Controllers\CategoryController@show')->name('category.show');
 Route::delete('/categories/{id}', 'App\Http\Controllers\CategoryController@destroy')->name('category.destroy');
 
-Route::get('/custom-users', 'App\Http\Controllers\CustomUserController@index')->name('custom-users.index');
-Route::get('/custom-users/create', 'App\Http\Controllers\CustomUserController@create')->name('custom-users.create');
-Route::post('/custom-users/save', 'App\Http\Controllers\CustomUserController@save')->name('custom-users.save');
-Route::get('/custom-users/{id}', 'App\Http\Controllers\CustomUserController@show')->name('custom-users.show');
-Route::delete('/custom-users/{id}', 'App\Http\Controllers\CustomUserController@destroy')->name('custom-users.destroy');
+Route::get('/custom-users', 'App\Http\Controllers\CustomUserController@index')->name('custom-user.index');
+Route::get('/custom-users/create', 'App\Http\Controllers\CustomUserController@create')->name('custom-user.create');
+Route::post('/custom-users/save', 'App\Http\Controllers\CustomUserController@save')->name('custom-user.save');
+Route::get('/custom-users/{id}', 'App\Http\Controllers\CustomUserController@show')->name('custom-user.show');
+Route::delete('/custom-users/{id}', 'App\Http\Controllers\CustomUserController@destroy')->name('custom-user.destroy');
 
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
 Route::get('/games/create', 'App\Http\Controllers\GameController@create')->name('game.create');
 Route::post('/games/save', 'App\Http\Controllers\GameController@save')->name('game.save');
-Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
-Route::delete('/games/{id}', 'App\Http\Controllers\GameController@destroy')->name('game.destroy');
 Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
 Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
+Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
+Route::delete('/games/{id}', 'App\Http\Controllers\GameController@destroy')->name('game.destroy');

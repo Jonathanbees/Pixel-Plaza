@@ -50,11 +50,6 @@ class ReviewController extends Controller
         return redirect()->route('review.index');
     }
 
-    public function success(): View
-    {
-        return view('review.success');
-    }
-
     public function destroy(string $id): RedirectResponse
     {
         try {

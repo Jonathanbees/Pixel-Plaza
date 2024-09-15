@@ -43,11 +43,6 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    public function success(): View
-    {
-        return view('category.success');
-    }
-
     public function destroy(string $id): RedirectResponse
     {
         $category = Category::findOrFail($id);

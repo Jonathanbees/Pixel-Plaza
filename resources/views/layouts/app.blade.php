@@ -32,8 +32,8 @@
                         Admin
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                        <li><a class="dropdown-item" href="{{ route('custom-users.index') }}">Users</a></li>
-                        <li><a class="dropdown-item" href="{{ route('custom-users.create') }}">Create User</a></li>
+                        <li><a class="dropdown-item" href="{{ route('custom-user.index') }}">Users</a></li>
+                        <li><a class="dropdown-item" href="{{ route('custom-user.create') }}">Create User</a></li>
                         <li><a class="dropdown-item" href="{{ route('category.index') }}">Categories</a></li>
                         <li><a class="dropdown-item" href="{{ route('category.create') }}">Create Category</a></li>
                         <li><a class="dropdown-item" href="{{ route('review.index') }}">Reviews</a></li>
@@ -70,9 +70,10 @@
                     <h5 class="text-uppercase">Links</h5>
                     <ul class="list-unstyled mb-0 text-white">
                         <li><a href="{{ route('home.index') }}" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="{{ route('game.index') }}" class="text-white text-decoration-none">Games</a></li>
+                        <li><a href="{{ route('custom-user.index') }}" class="text-white text-decoration-none">Users</a></li>
                         <li><a href="{{ route('category.index') }}" class="text-white text-decoration-none">Categories</a></li>
-                        <li><a href="{{ route('custom-users.index') }}">Users</a></li>
-                        <li><a href="{{ route('review.index') }}">Reviews</a></li>
+                        <li><a href="{{ route('review.index') }}" class="text-white text-decoration-none">Reviews</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
