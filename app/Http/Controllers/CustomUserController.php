@@ -4,22 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomUser;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CustomUserController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $users = CustomUser::select('id', 'username')->get();
 
         return view('custom-users.index', compact('users'));
     }
 
-    public function create()
+    public function create(): View
     {
         return view('custom-users.create');
     }
 
-    public function save(Request $request)
+    public function save(Request $request): RedirectResponse
     {
         $request->validate([
             'username' => 'required|string|max:255',
@@ -33,21 +35,21 @@ class CustomUserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('custom-users.index')->with('success', 'Elemento creado satisfactoriamente.');
+        return redirect()->route('custom-users.index')->with('success', 'Item created successfully.');
     }
 
-    public function show($id)
+    public function show(int $id): View
     {
         $user = CustomUser::findOrFail($id);
 
         return view('custom-users.show', compact('user'));
     }
 
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $user = CustomUser::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('custom-users.index')->with('success', 'Elemento eliminado satisfactoriamente.');
+        return redirect()->route('custom-users.index')->with('success', 'Item deleted successfully.');
     }
 }

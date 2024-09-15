@@ -6,6 +6,7 @@ use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use \Exception;
 
 class ReviewController extends Controller
 {
@@ -36,8 +37,9 @@ class ReviewController extends Controller
 
     public function create(): View
     {
-        $viewData = []; //to be sent to the view
+        $viewData = [];
         $viewData['title'] = 'Create review';
+        $viewData['subtitle'] = 'Create a new review';
 
         return view('review.create')->with('viewData', $viewData);
     }
@@ -74,11 +76,11 @@ class ReviewController extends Controller
         return view('review.nonexistent')->with('viewData', $viewData);
     }
 
-    public function destroy(string $id): RedirectResponse // according to RESTful conventions
+    public function destroy(string $id): RedirectResponse
     {
         try {
             Review::findOrFail($id)->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('review.nonexistent');
         }
 
