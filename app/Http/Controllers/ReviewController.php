@@ -25,7 +25,8 @@ class ReviewController extends Controller
         try {
             $review = Review::findOrFail($id);
         } catch (Exception $e) {
-            $viewData['objectType'] = "Review";
+            $viewData['objectType'] = 'Review';
+
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
         $viewData['review'] = $review;
@@ -45,6 +46,7 @@ class ReviewController extends Controller
         Review::create($request->only(['rating', 'comment', 'game', 'client']));
 
         session()->flash('viewData.success', 'Review created successfully.');
+
         return redirect()->route('review.index');
     }
 
@@ -58,11 +60,13 @@ class ReviewController extends Controller
         try {
             Review::findOrFail($id)->delete();
         } catch (Exception $e) {
-            $viewData['objectType'] = "Review";
+            $viewData['objectType'] = 'Review';
+
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
 
         session()->flash('viewData.success', 'Review deleted successfully.');
+
         return redirect()->route('review.index');
     }
 }

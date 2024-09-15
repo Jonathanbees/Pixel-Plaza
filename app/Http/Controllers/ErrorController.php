@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ErrorController extends Controller
 {
@@ -12,6 +12,7 @@ class ErrorController extends Controller
         $viewData = $request->session()->get('viewData', []);
         $viewData['title'] = 'Nonexistent - PIXEL PLAZA';
         $viewData['subtitle'] = 'Nonexistent - Object not found';
+
         return view('error.nonexistent')->with('viewData', $viewData);
     }
 }

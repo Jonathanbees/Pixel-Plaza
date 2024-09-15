@@ -31,6 +31,7 @@ class CustomUserController extends Controller
         CustomUser::create($request->only(['username', 'email', 'password']));
 
         session()->flash('viewData.success', 'User created successfully.');
+
         return redirect()->route('custom-users.index');
     }
 
@@ -40,7 +41,8 @@ class CustomUserController extends Controller
         try {
             $user = CustomUser::findOrFail($id);
         } catch (Exception $e) {
-            $viewData['objectType'] = "Custom User";
+            $viewData['objectType'] = 'Custom User';
+
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
         $viewData['user'] = $user;
@@ -53,11 +55,13 @@ class CustomUserController extends Controller
         try {
             CustomUser::findOrFail($id)->delete();
         } catch (Exception $e) {
-            $viewData['objectType'] = "Custom User";
+            $viewData['objectType'] = 'Custom User';
+
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
 
         session()->flash('viewData.success', 'User deleted successfully.');
+
         return redirect()->route('custom-users.index');
     }
 }

@@ -9,12 +9,11 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $viewData = [];
-        $viewData['title'] = 'Categories - Online Store';
-        $viewData['subtitle'] = 'List of categories';
         $viewData['categories'] = Category::all();
+        $viewData['success'] = session('viewData.success');
 
         return view('category.index')->with('viewData', $viewData);
     }
@@ -23,34 +22,28 @@ class CategoryController extends Controller
     {
         $viewData = [];
         $category = Category::findOrFail($id);
-        $viewData['title'] = $category['name'].' - Online Store';
-        $viewData['subtitle'] = $category['name'].' - category information';
-        $viewData['categories'] = $category;
+        $viewData['category'] = $category;
 
         return view('category.show')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        $viewData = []; //to be sent to the view
-        $viewData['title'] = 'Create product';
-
-        return view('category.create')->with('viewData', $viewData);
+        return view('category.create');
     }
 
     public function save(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-        //here will go the code to call the model and save it to the database
+        Category::validate($request);
+
         Category::create($request->only(['name', 'description']));
 
-        return redirect()->route('category.success');
+        session()->flash('viewData.success', 'Category created successfully.');
+
+        return redirect()->route('category.index');
     }
 
-    public function success()
+    public function success(): View
     {
         return view('category.success');
     }
@@ -60,6 +53,8 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect()->route('category.index')->with('success', 'Category deleted successfully');
+        session()->flash('viewData.success', 'Category deleted successfully.');
+
+        return redirect()->route('category.index');
     }
 }
