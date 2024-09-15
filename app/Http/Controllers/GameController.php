@@ -79,7 +79,7 @@ class GameController extends Controller
     public function addToShoppingCart(string $id): RedirectResponse
     {
         $cart = session()->get('cart', []);
-        if (!in_array($id, $cart)) {
+        if (! in_array($id, $cart)) {
             $cart[] = $id;
         }
         session()->put('cart', $cart);

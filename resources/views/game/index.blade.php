@@ -9,7 +9,6 @@
             {{ session('viewData.success') }}
         </div>
     @endif
-    <a href="{{ route('game.create') }}" class="btn btn-primary mb-3">Add Game</a>
     <div class="row">
         @foreach ($viewData["games"] as $game)
         <div class="col-md-4 col-lg-3 mb-2">
