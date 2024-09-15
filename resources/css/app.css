@@ -1,0 +1,57 @@
+/* Estilos personalizados para el navbar */
+.navbar {
+    background-color: #f8f9fa !important;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #007bff !important;
+}
+
+.nav-link {
+    color: #343a40 !important;
+}
+
+.nav-link:hover {
+    color: #007bff !important;
+}
+
+/* Estilos personalizados para el footer */
+footer {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+}
+
+footer h5 {
+    font-weight: bold;
+    color: #343a40;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .bg-dark {
+    background-color: #343a40 !important;
+}
+
+.links ul li a {
+    text-decoration: none;
+}
+
+/* Asegurar que el footer esté en la parte inferior */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex-grow: 1;
+}
