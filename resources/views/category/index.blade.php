@@ -3,7 +3,12 @@
 @section('subtitle', 'Categories')
 @section('content')
 
-<div class="container">
+<div class="container mt-4">
+  @if(session('viewData.success'))
+    <div class="alert alert-success">
+      {{ session('viewData.success') }}
+    </div>
+  @endif
   <div class="row">
     <div class="col-12">
       <table class="table table-striped">
