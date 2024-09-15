@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use \Exception;
 
 class ReviewController extends Controller
 {
@@ -25,7 +25,7 @@ class ReviewController extends Controller
         $viewData = [];
         try {
             $review = Review::findOrFail($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('review.nonexistent');
         }
         $viewData['title'] = 'Review #'.$id.' - PIXEL PLAZA';
@@ -46,12 +46,7 @@ class ReviewController extends Controller
 
     public function save(Request $request): RedirectResponse
     {
-        $request->validate([
-            'rating' => 'required|numeric|min:1|max:5',
-            'comment' => 'required|max:500',
-            'game' => 'required',
-            'client' => 'required',
-        ]);
+        Review::validate($request);
 
         Review::create($request->only(['rating', 'comment', 'game', 'client']));
 

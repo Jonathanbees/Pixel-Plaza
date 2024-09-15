@@ -3,46 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomUser;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CustomUserController extends Controller
 {
     public function index(): View
     {
-        $users = CustomUser::select('id', 'username')->get();
+        $viewData = [];
+        $viewData['title'] = 'Custom Users - PIXEL PLAZA';
+        $viewData['subtitle'] = 'List of custom users';
+        $viewData['users'] = CustomUser::all();
 
-        return view('custom-users.index', compact('users'));
+        return view('custom-users.index')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        return view('custom-users.create');
+        $viewData = [];
+        $viewData['title'] = 'Create Custom User';
+        $viewData['subtitle'] = 'Create a new custom user';
+
+        return view('custom-users.create')->with('viewData', $viewData);
     }
 
     public function save(Request $request): RedirectResponse
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:custom_users',
-            'password' => 'required|string|min:8',
-        ]);
+        CustomUser::validate($request);
 
-        $user = CustomUser::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        CustomUser::create($request->only(['username', 'email', 'password']));
 
-        return redirect()->route('custom-users.index')->with('success', 'Item created successfully.');
+        return redirect()->route('custom-users.index')->with('success', 'User created successfully.');
     }
 
     public function show(int $id): View
     {
+        $viewData = [];
         $user = CustomUser::findOrFail($id);
+        $viewData['title'] = 'Custom User #'.$id.' - PIXEL PLAZA';
+        $viewData['subtitle'] = 'Custom User #'.$id.' - User information';
+        $viewData['user'] = $user;
 
-        return view('custom-users.show', compact('user'));
+        return view('custom-users.show')->with('viewData', $viewData);
     }
 
     public function destroy(int $id): RedirectResponse
@@ -50,6 +53,6 @@ class CustomUserController extends Controller
         $user = CustomUser::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('custom-users.index')->with('success', 'Item deleted successfully.');
+        return redirect()->route('custom-users.index')->with('success', 'User deleted successfully.');
     }
 }

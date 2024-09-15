@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class Review extends Model
 {
@@ -16,15 +18,27 @@ class Review extends Model
      * $this->attributes['comment'] - string - contains the review comment
      * $this->attributes['client'] - string - contains the client name
      * $this->attributes['game'] - string - contains the game name
+     * $this->attributes['created_at'] - timestamp - contains the creation date
+     * $this->attributes['updated_at'] - timestamp - contains the last update date
      */
-    protected $fillable = ['rating', 'comment', 'client', 'game'];
+    protected $guarded = ['id'];
+
+    public static function validate(Request $request): void
+    {
+        $request->validate([
+            'rating' => 'required|numeric|min:1|max:5',
+            'comment' => 'required|max:500',
+            'game' => 'required',
+            'client' => 'required',
+        ]);
+    }
 
     public function getId(): int
     {
         return $this->attributes['id'];
     }
 
-    public function setId($id): void
+    public function setId(int $id): void
     {
         $this->attributes['id'] = $id;
     }
@@ -34,7 +48,7 @@ class Review extends Model
         return $this->attributes['rating'];
     }
 
-    public function setRating($rating): void
+    public function setRating(int $rating): void
     {
         $this->attributes['rating'] = $rating;
     }
@@ -44,7 +58,7 @@ class Review extends Model
         return $this->attributes['comment'];
     }
 
-    public function setComment($comment): void
+    public function setComment(string $comment): void
     {
         $this->attributes['comment'] = $comment;
     }
@@ -54,7 +68,7 @@ class Review extends Model
         return $this->attributes['client'];
     }
 
-    public function setClient($client): void
+    public function setClient(string $client): void
     {
         $this->attributes['client'] = $client;
     }
@@ -64,8 +78,18 @@ class Review extends Model
         return $this->attributes['game'];
     }
 
-    public function setGame($game): void
+    public function setGame(string $game): void
     {
         $this->attributes['game'] = $game;
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'];
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'];
     }
 }
