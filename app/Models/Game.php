@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class Game extends Model
 {
@@ -112,9 +111,9 @@ class Game extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function getReviewsSum(): float
+    public function getReviewsSum(): ?float
     {
-        return $this->attributes['reviewsSum'];
+        return $this->attributes['reviewsSum'] ?? null;
     }
 
     public function setReviewsSum(float $reviewsSum): void
@@ -122,9 +121,9 @@ class Game extends Model
         $this->attributes['reviewsSum'] = $reviewsSum;
     }
 
-    public function getReviewsCuantity(): int
+    public function getReviewsCuantity(): ?int
     {
-        return $this->attributes['reviewsCuantity'];
+        return $this->attributes['reviewsCuantity'] ?? null;
     }
 
     public function setReviewsCuantity(int $reviewsCuantity): void
@@ -132,9 +131,9 @@ class Game extends Model
         $this->attributes['reviewsCuantity'] = $reviewsCuantity;
     }
 
-    public function getBalance(): string
+    public function getBalance(): ?string
     {
-        return $this->attributes['balance'];
+        return $this->attributes['balance'] ?? null;
     }
 
     public function setBalance(string $balance): void
@@ -142,19 +141,19 @@ class Game extends Model
         $this->attributes['balance'] = $balance;
     }
 
-    public function getBalanceDate(): ?Carbon
+    public function getBalanceDate(): ?string
     {
-        return $this->attributes['balanceDate'];
+        return $this->attributes['balanceDate'] ?? null;
     }
 
-    public function setBalanceDate(?Carbon $balanceDate): void
+    public function setBalanceDate(?string $balanceDate): void
     {
         $this->attributes['balanceDate'] = $balanceDate;
     }
 
-    public function getBalanceReviewsCount(): int
+    public function getBalanceReviewsCount(): ?int
     {
-        return $this->attributes['balanceReviewsCount'];
+        return $this->attributes['balanceReviewsCount'] ?? null;
     }
 
     public function setBalanceReviewsCount(int $balanceReviewsCount): void
@@ -162,13 +161,13 @@ class Game extends Model
         $this->attributes['balanceReviewsCount'] = $balanceReviewsCount;
     }
 
-    public function getCreatedAt(): ?Carbon
+    public function getCreatedAt(): ?string
     {
-        return $this->attributes['created_at'];
+        return $this->attributes['created_at'] ?? null;
     }
 
-    public function getUpdatedAt(): ?Carbon
+    public function getUpdatedAt(): ?string
     {
-        return $this->attributes['updated_at'];
+        return $this->attributes['updated_at'] ?? null;
     }
 }

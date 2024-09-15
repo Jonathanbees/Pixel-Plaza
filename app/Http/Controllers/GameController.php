@@ -43,7 +43,7 @@ class GameController extends Controller
     {
         Game::validate($request);
 
-        Game::create($request->only(['rating', 'comment', 'game', 'client']));
+        Game::create($request->only(['name', 'image', 'price', 'description', 'company']));
 
         session()->flash('viewData.success', 'Game created successfully.');
 
@@ -66,6 +66,26 @@ class GameController extends Controller
         }
 
         session()->flash('viewData.success', 'Game deleted successfully.');
+
+        return redirect()->route('game.index');
+    }
+
+    public function shoppingCart(): View
+    {
+        $cart = session()->get('cart', []);
+        $games = Game::find($cart);
+
+        $viewData = [];
+        $viewData['games'] = $games;
+
+        return view('game.shoppingCart')->with('viewData', $viewData);
+    }
+
+    public function addToShoppingCart(string $id): RedirectResponse
+    {
+        $cart = session()->get('cart', []);
+        $cart[] = $id;
+        session()->put('cart', $cart);
 
         return redirect()->route('game.index');
     }

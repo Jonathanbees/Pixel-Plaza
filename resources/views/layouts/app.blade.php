@@ -24,6 +24,9 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="{{ route('home.index') }}">Home</a>
+                    <a class="nav-link" href="{{ route('game.index') }}">Games</a>
+                    <a class="nav-link" href="{{ route('game.create') }}">Create Game</a>
+                    <a class="nav-link" href="{{ route('game.shoppingCart') }}">Shopping Cart</a>
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin
