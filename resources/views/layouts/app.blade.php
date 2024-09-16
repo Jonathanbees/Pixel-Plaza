@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous" />
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/base.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/header.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/footer.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>@yield('title', 'Online Store')</title>
 </head>
 
@@ -27,6 +31,26 @@
                     <a class="nav-link" href="{{ route('game.index') }}">Games</a>
                     <a class="nav-link" href="{{ route('game.create') }}">Create Game</a>
                     <a class="nav-link" href="{{ route('game.shoppingCart') }}">Shopping Cart</a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link shopping-cart-icon position-relative" href="{{ route('game.shoppingCart') }}" id="cartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-shopping-cart"></i>
+                            @if(session()->has('cart') && count(session('cart')) > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ count(session('cart')) }}
+                                </span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cartDropdown">
+                            @if(session()->has('cart') && count(session('cart')) > 0)
+                                @foreach(App\Models\Game::find(session('cart')) as $game)
+                                    <li><a class="dropdown-item" href="{{ route('game.show', ['id' => $game->getId()]) }}">{{ $game->getName() }}</a></li>
+                                @endforeach
+                            @else
+                                <li><a class="dropdown-item" href="#">No items in cart</a></li>
+                            @endif
+                        </ul>
+                    </div>
+                    
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin
