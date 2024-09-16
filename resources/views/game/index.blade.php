@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', "PIXEL PLAZA - List of games")
-@section('subtitle', "List of games")
 @section('content')
 
 <div class="container mt-4">

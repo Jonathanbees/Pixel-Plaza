@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Custom Users - PIXEL PLAZA')
-@section('subtitle', 'List of custom users')
+
 
 @section('content')
 <div class="container mt-4">

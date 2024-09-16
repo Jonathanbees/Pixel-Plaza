@@ -1,58 +1,61 @@
 /* Navbar customization */
 .custom-navbar {
-    background-color: #1c1c1e;
-    /* Dark background color */
-    color: white;
+    background-color: #121212;
+    color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
-    /* Modern font */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .custom-navbar .navbar-brand {
     font-weight: bold;
-    color: #a259ff !important;
-    /* Purple color */
+    color: #1DB954 !important;
+}
+
+.custom-navbar .navbar-brand:hover {
+    font-weight: bold;
+    color: #FF4500 !important;
+    transition: ease-in-out 0.3s;
+}
+
+.header img {
+    width: 50px;
+    height: 50px;
 }
 
 .custom-navbar .nav-link {
-    color: #a259ff !important;
-    /* Purple color */
+    color: #1E90FF !important;
     transition: color 0.3s ease;
 }
 
 .custom-navbar .nav-link:hover {
-    color: #4d4dff !important;
-    /* Electric blue color on hover */
+    color: #FF4500 !important;
 }
 
 .custom-navbar .shopping-cart-icon i {
     font-size: 1.5rem;
-    /* Adjust icon size */
-    color: #4d4dff;
-    /* Electric blue color */
+    color: #1E90FF;
 }
 
 .custom-navbar .shopping-cart-icon i:hover {
     font-size: 1.5rem;
-    /* Adjust icon size */
-    color: #a259ff;
+    color: #1DB954;
     transition: color 0.3s ease;
-    /* Electric blue color */
 }
 
 .custom-navbar .dropdown-menu {
-    background-color: #1c1c1e;
-    /* Dark background for dropdown */
+    background-color: #121212;
     border: none;
 }
 
 .custom-navbar .dropdown-item {
-    color: #a259ff;
-    /* Purple color for dropdown items */
+    color: #1E90FF;
 }
 
 .custom-navbar .dropdown-item:hover {
-    background-color: #4d4dff;
-    /* Electric blue background on hover */
-    color: white;
+    background-color: #FF4500;
+    color: #FFFFFF;
+}
+
+.custom-navbar .go-to-cart-link:hover {
+    color: #FF4500 !important;
 }

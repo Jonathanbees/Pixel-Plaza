@@ -1,26 +1,40 @@
 footer {
-    background-color: #f8f9fa;
+    background-color: #121212;
     padding: 40px 0;
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
 }
 
 footer h5 {
     font-weight: bold;
-    color: #343a40;
+    color: #1DB954;
 }
 
-footer a {
-    color: #007bff;
+footer p {
+    color: #FFFFFF;
+}
+
+footer .list-links li a {
+    color: #1E90FF !important;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-footer a:hover {
+footer .list-links li a:hover {
+    color: #FF4500;
     text-decoration: underline;
 }
 
 footer .bg-dark {
-    background-color: #343a40 !important;
+    background-color: #121212 !important;
 }
 
 .links ul li a {
     text-decoration: none;
+    color: #1E90FF;
+}
+
+.links ul li a:hover {
+    color: #FF4500 !important;
+    text-decoration: underline;
 }

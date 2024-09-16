@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', 'Create Game')
-@section('subtitle', 'Create a new game')
 
 @section('content')
 <div class="container mt-5">

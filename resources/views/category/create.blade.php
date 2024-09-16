@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Create Category')
-@section('subtitle', 'Create a new category')
 @section('content')
 <div class="container">
   <div class="row justify-content-center">

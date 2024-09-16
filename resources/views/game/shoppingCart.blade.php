@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Shopping Cart')
-@section('subtitle', 'Your shopping Cart')
 @section('content')
 
 <div class="container mt-4">

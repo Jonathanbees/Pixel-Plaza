@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Game Details')
-@section('subtitle', 'Details of the selected game')
 @section('content')
 
 <div class="container mt-4">

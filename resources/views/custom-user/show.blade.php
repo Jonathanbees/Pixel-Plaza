@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', 'User Details')
-@section('subtitle', 'Details of the selected user')
 
 @section('content')
 <div class="container mt-5">

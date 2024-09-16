@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', $viewData['category']['name'].' - Online Store')
-@section('subtitle', $viewData['category']['name'].' - category information')
 @section('content')
 
 <div class="container mt-4">

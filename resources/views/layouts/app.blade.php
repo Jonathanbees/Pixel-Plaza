@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>@yield('title', 'Online Store')</title>
+    <!-- Logo --> 
+    <link rel="icon" href="{{ asset('images/pixel_plaza.svg') }}" type="image/x-icon">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -20,6 +22,7 @@
 
     <nav class="navbar navbar-expand-lg shadow-sm custom-navbar">
         <div class="container header">
+            <img src="{{ asset('images/pixel_plaza.svg') }}" alt="Pixel Plaza" class="logo">
             <a class="navbar-brand" href="{{ route('home.index') }}">PIXEL PLAZA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,31 +71,24 @@
             </div>
         </div>
     </nav>
-    
-    <header class="masthead bg-slate-950 text-black text-center py-4">
-        <div class="container d-flex align-items-center flex-column">
-            <h2>@yield('subtitle', 'Homepage')</h2>
-        </div>
-    </header>
-
     <!-- header -->
 
     <div class="container my-4 flex-grow-1">
         @yield('content')
     </div>
     <!-- footer -->
-    <footer class="bg-dark text-center text-lg-start text-white mt-auto">
+    <footer class="">
         <div class="container p-4">
             <div class="row">
                 <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase text-white">Online Store</h5>
+                    <h5 class="text-uppercase text-white title-footer">Online Store</h5>
                     <p>
                         Your one-stop shop for all your needs.
                     </p>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Links</h5>
-                    <ul class="list-unstyled mb-0 text-white">
+                    <ul class="list-unstyled mb-0 list-links">
                         <li><a href="{{ route('home.index') }}" class="text-white text-decoration-none">Home</a></li>
                         <li><a href="{{ route('game.index') }}" class="text-white text-decoration-none">Games</a></li>
                         <li><a href="{{ route('custom-user.index') }}" class="text-white text-decoration-none">Users</a></li>
@@ -102,7 +98,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Follow Us</h5>
-                    <ul class="list-unstyled mb-0">
+                    <ul class="list-unstyled mb-0 list-links">
                         <li><a href="https://twitter.com/danielgarax" class="text-white text-decoration-none">Twitter</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Facebook</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Instagram</a></li>

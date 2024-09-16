@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', 'Create Custom User')
-@section('subtitle', 'Create a new custom user')
 
 @section('content')
 <div class="container mt-5">
