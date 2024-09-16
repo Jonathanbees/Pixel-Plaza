@@ -1,0 +1,58 @@
+/* Navbar customization */
+.custom-navbar {
+    background-color: #1c1c1e;
+    /* Dark background color */
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    /* Modern font */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-navbar .navbar-brand {
+    font-weight: bold;
+    color: #a259ff !important;
+    /* Purple color */
+}
+
+.custom-navbar .nav-link {
+    color: #a259ff !important;
+    /* Purple color */
+    transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #4d4dff !important;
+    /* Electric blue color on hover */
+}
+
+.custom-navbar .shopping-cart-icon i {
+    font-size: 1.5rem;
+    /* Adjust icon size */
+    color: #4d4dff;
+    /* Electric blue color */
+}
+
+.custom-navbar .shopping-cart-icon i:hover {
+    font-size: 1.5rem;
+    /* Adjust icon size */
+    color: #a259ff;
+    transition: color 0.3s ease;
+    /* Electric blue color */
+}
+
+.custom-navbar .dropdown-menu {
+    background-color: #1c1c1e;
+    /* Dark background for dropdown */
+    border: none;
+}
+
+.custom-navbar .dropdown-item {
+    color: #a259ff;
+    /* Purple color for dropdown items */
+}
+
+.custom-navbar .dropdown-item:hover {
+    background-color: #4d4dff;
+    /* Electric blue background on hover */
+    color: white;
+}

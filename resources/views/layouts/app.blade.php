@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous" />
-    <link href="{{ asset('/css/base.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/header.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/footer.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/base.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/header.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/footer.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>@yield('title', 'Online Store')</title>
@@ -18,8 +18,8 @@
 
     <!-- header -->
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg shadow-sm custom-navbar">
+        <div class="container header">
             <a class="navbar-brand" href="{{ route('home.index') }}">PIXEL PLAZA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,6 @@
                     <a class="nav-link" href="{{ route('home.index') }}">Home</a>
                     <a class="nav-link" href="{{ route('game.index') }}">Games</a>
                     <a class="nav-link" href="{{ route('game.create') }}">Create Game</a>
-                    <a class="nav-link" href="{{ route('game.shoppingCart') }}">Shopping Cart</a>
                     <div class="nav-item dropdown">
                         <a class="nav-link shopping-cart-icon position-relative" href="{{ route('game.shoppingCart') }}" id="cartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-shopping-cart"></i>
@@ -45,12 +44,13 @@
                                 @foreach(App\Models\Game::find(session('cart')) as $game)
                                     <li><a class="dropdown-item" href="{{ route('game.show', ['id' => $game->getId()]) }}">{{ $game->getName() }}</a></li>
                                 @endforeach
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('game.shoppingCart') }}">Go to cart</a>
                             @else
                                 <li><a class="dropdown-item" href="#">No items in cart</a></li>
                             @endif
                         </ul>
                     </div>
-                    
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin
