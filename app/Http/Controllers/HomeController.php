@@ -1,5 +1,7 @@
 <?php
 
+// Samuel
+
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
