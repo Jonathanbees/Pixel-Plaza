@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Home Page - Online Store')
+@section('styles')
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="text-center">
     <h1>Welcome to PIXEL PLAZA</h1>

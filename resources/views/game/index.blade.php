@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', "PIXEL PLAZA - List of games")
+@section('styles')
+    <link href="{{ asset('css/index_products.css') }}" rel="stylesheet">
+@endsection
 @section('content')
+
 
 <div class="container mt-4">
     @if(session('viewData.success'))

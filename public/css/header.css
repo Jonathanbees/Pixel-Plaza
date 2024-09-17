@@ -3,7 +3,9 @@
     background-color: #121212;
     color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    /* Sombra para efecto 3D */
+    border-radius: 10px;
 }
 
 .custom-navbar .navbar-brand {
