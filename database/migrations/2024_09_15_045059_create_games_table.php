@@ -17,13 +17,16 @@ return new class extends Migration
             $table->string('image');
             $table->decimal('price', 8, 2);
             $table->text('description');
-            $table->string('company');
+            $table->unsignedBigInteger('company_id'); // Foreign key for the company
             $table->decimal('reviewsSum', 8, 2)->default(0);
             $table->integer('reviewsCuantity')->default(0);
             $table->string('balance')->nullable();
             $table->timestamp('balanceDate')->nullable();
             $table->integer('balanceReviewsCount')->default(0);
             $table->timestamps();
+
+            // Foreign key constraint
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
 
         Schema::create('category_game', function (Blueprint $table) {

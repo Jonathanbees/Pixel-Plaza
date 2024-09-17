@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
 class Game extends Model
@@ -17,9 +18,7 @@ class Game extends Model
      * $this->attributes['image'] - string - contains the game image URL
      * $this->attributes['price'] - float - contains the game price
      * $this->attributes['description'] - string - contains the game description
-     * $this->attributes['company'] - string - contains the company name
-     * $this->attributes['categories'] - array - contains the categories associated with the game
-     * $this->attributes['reviews'] - array - contains the reviews associated with the game
+     * $this->attributes['company_id'] - int - contains the company ID
      * $this->attributes['reviewsSum'] - float - contains the sum of the reviews' ratings
      * $this->attributes['reviewsCuantity'] - int - contains the number of reviews
      * $this->attributes['balance'] - string - contains the balance information
@@ -27,6 +26,7 @@ class Game extends Model
      * $this->attributes['balanceReviewsCount'] - int - contains the count of balance reviews
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
+     * $this->company - Company - contains the associated Company that owns the game
      */
     protected $guarded = ['id'];
 
@@ -37,8 +37,13 @@ class Game extends Model
             'image' => 'required|url',
             'price' => 'required|numeric|min:0',
             'description' => 'required|string|max:1000',
-            'company' => 'required|string|max:255',
+            'company_id' => 'required|exists:companies,id',
         ]);
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 
     public function getId(): int
@@ -91,14 +96,14 @@ class Game extends Model
         $this->attributes['description'] = $description;
     }
 
-    public function getCompany(): string
+    public function getCompanyId(): int
     {
-        return $this->attributes['company'];
+        return $this->attributes['company_id'];
     }
 
-    public function setCompany(string $company): void
+    public function setCompanyId(int $companyId): void
     {
-        $this->attributes['company'] = $company;
+        $this->attributes['company_id'] = $companyId;
     }
 
     public function categories()
