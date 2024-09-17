@@ -41,11 +41,6 @@ class Game extends Model
         ]);
     }
 
-    public function company(): BelongsTo
-    {
-        return $this->belongsTo(Company::class);
-    }
-
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -168,11 +163,16 @@ class Game extends Model
 
     public function getCreatedAt(): ?string
     {
-        return $this->attributes['created_at'] ?? null;
+        return $this->attributes['created_at'];
     }
 
     public function getUpdatedAt(): ?string
     {
-        return $this->attributes['updated_at'] ?? null;
+        return $this->attributes['updated_at'];
+    }
+
+    public function getCompany(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }

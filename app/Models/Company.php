@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
  * $this->attributes['user_id'] - int - contains the user ID of the company's owner
  * $this->attributes['created_at'] - timestamp - contains the creation date
  * $this->attributes['updated_at'] - timestamp - contains the last update date
- * $this->user - User - contains the associated User (that owns this company)
+ * $this->user - CustomUser - contains the associated CustomUser (owner)
  * $this->games - Game[] - contains the associated games
  */
 class Company extends Model
@@ -30,18 +30,8 @@ class Company extends Model
         $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:custom_users,id',
         ]);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function games(): HasMany
-    {
-        return $this->hasMany(Game::class);
     }
 
     public function getId(): int
@@ -92,5 +82,15 @@ class Company extends Model
     public function getUpdatedAt(): ?string
     {
         return $this->attributes['updated_at'];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'user_id');
+    }
+
+    public function games(): HasMany
+    {
+        return $this->hasMany(Game::class);
     }
 }
