@@ -21,13 +21,6 @@ return new class extends Migration
             // Foreign key constraint
             $table->foreign('user_id')->references('id')->on('custom_users')->onDelete('cascade');
         });
-
-        Schema::table('games', function (Blueprint $table) {
-            $table->unsignedBigInteger('company_id')->nullable(); // Foreign key for the company
-
-            // Foreign key constraint
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-        });
     }
 
     /**
@@ -35,11 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('games', function (Blueprint $table) {
-            $table->dropForeign(['company_id']);
-            $table->dropColumn('company_id');
-        });
-
         Schema::dropIfExists('companies');
     }
 };
