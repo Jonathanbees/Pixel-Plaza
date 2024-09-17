@@ -2,8 +2,11 @@
 
 @section('title', 'Create Game')
 
+@section('styles')
+    <link href="{{ asset('css/create_products.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
-<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             @if ($errors->any())
@@ -15,8 +18,8 @@
                     </ul>
                 </div>
             @endif
-            <div class="card">
-                <div class="card-header text-center">
+            <div class="card form-container">
+                <div class="card-header form-header">
                     <h4>Create Game</h4>
                 </div>
                 <div class="card-body">
@@ -50,5 +53,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
