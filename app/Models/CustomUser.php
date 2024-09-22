@@ -1,11 +1,13 @@
 <?php
 
+// Samuel
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class CustomUser extends Model
 {
@@ -19,6 +21,7 @@ class CustomUser extends Model
      * $this->attributes['password'] - string - contains the custom user password
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
+     * $this->company - Company - contains the associated Company (optional)
      */
     protected $guarded = ['id'];
 
@@ -71,13 +74,18 @@ class CustomUser extends Model
         $this->attributes['password'] = bcrypt($password);
     }
 
-    public function getCreatedAt(): ?Carbon
+    public function getCreatedAt(): ?string
     {
         return $this->attributes['created_at'];
     }
 
-    public function getUpdatedAt(): ?Carbon
+    public function getUpdatedAt(): ?string
     {
         return $this->attributes['updated_at'];
+    }
+
+    public function getCompany(): HasOne
+    {
+        return $this->hasOne(Company::class, 'user_id');
     }
 }

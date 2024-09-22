@@ -1,5 +1,7 @@
 <?php
 
+// Esteban
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +19,6 @@ return new class extends Migration
             $table->string('image');
             $table->decimal('price', 8, 2);
             $table->text('description');
-            $table->string('company');
             $table->decimal('reviewsSum', 8, 2)->default(0);
             $table->integer('reviewsCuantity')->default(0);
             $table->string('balance')->nullable();
