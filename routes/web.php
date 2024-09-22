@@ -15,11 +15,11 @@ Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('gam
 
 // ========================== ADMIN ================================
 // Games
-Route::get('/admin/games', 'App\Http\Controllers\GameController@index')->name('admin-game.index');
-Route::get('/admin/games/create', 'App\Http\Controllers\GameController@create')->name('admin-game.create');
-Route::post('/admin/games/save', 'App\Http\Controllers\GameController@save')->name('admin-game.save');
-Route::get('/admin/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
-Route::delete('/admin/games/{id}', 'App\Http\Controllers\GameController@destroy')->name('admin-game.destroy');
+Route::get('/admin/games', 'App\Http\Controllers\AdminGameController@index')->name('admin-game.index');
+Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
+Route::post('/admin/games/save', 'App\Http\Controllers\AdminGameController@save')->name('admin-game.save');
+Route::get('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@show')->name('game.show');
+Route::delete('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@destroy')->name('admin-game.destroy');
 
 // Reviews
 Route::get('/admin/reviews', 'App\Http\Controllers\AdminReviewController@index')->name('admin-review.index');
