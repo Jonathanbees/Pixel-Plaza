@@ -23,7 +23,7 @@
                     <h4>Create Game</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('game.save') }}" method="POST">
+                    <form action="{{ route('admin-game.save') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Name:</label>

@@ -15,7 +15,7 @@
             </ul>
             @endif
 
-            <form method="POST" action="{{ route('category.save') }}">
+            <form method="POST" action="{{ route('admin-category.save') }}">
               @csrf
               <input type="text" class="form-control mb-2" placeholder="Enter name" name="name" value="{{ old('name') }}" />
               <input type="text" class="form-control mb-2" placeholder="Enter description" name="description" value="{{ old('description') }}" />

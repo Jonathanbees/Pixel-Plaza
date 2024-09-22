@@ -22,11 +22,7 @@
                         <p class="card-text">{{ $game->getPrice() }}</p>
                     </div>
                     <div class="btn-group" role="group">
-                        <a href="{{ route('game.show', ['id'=> $game->getId()]) }}" class="btn bg-primary text-white">View</a>
-                        <form action="{{ route('game.addToShoppingCart', ['id' => $game->getId()]) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success">Add to cart</button>
-                        </form>
+                        <a href="{{ route('admin-game.show', ['id'=> $game->getId()]) }}" class="btn bg-primary text-white">View</a>
                     </div>
                 </div>
             </div>

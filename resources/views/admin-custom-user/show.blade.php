@@ -17,7 +17,7 @@
                     <p><strong>Password:</strong> {{ $viewData['user']->getPassword() }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <form action="{{ route('custom-user.destroy', $viewData['user']->getId()) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin-custom-user.destroy', $viewData['user']->getId()) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>

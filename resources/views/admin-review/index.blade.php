@@ -16,7 +16,7 @@
             <div class="card">
                 <img src="https://media.zenfs.com/es/levelup_525/2aaa862355fa5749aa728dd95440ffc1" class="card-img-top img-card">
                 <div class="card-body text-center">
-                    <a href="{{ route('review.show', ['id'=> $review["id"]]) }}" class="btn bg-primary text-white">({{ $review["id"] }}) {{ $review["client"] }}</a>
+                    <a href="{{ route('admin-review.show', ['id'=> $review["id"]]) }}" class="btn bg-primary text-white">({{ $review["id"] }}) {{ $review["client"] }}</a>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@
           <tr>
             <td>{{ $category["id"] }}</td>
             <td>
-              <a href="{{ route('category.show', ['id'=> $category["id"]]) }}" class="text-decoration-none">
+              <a href="{{ route('admin-category.show', ['id'=> $category["id"]]) }}" class="text-decoration-none">
                 {{ $category["name"] }}
               </a>
             </td>

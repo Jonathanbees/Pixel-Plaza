@@ -24,7 +24,7 @@
         <td>{{ $viewData["category"]["description"] }}</td>
         <td>
           <a href="" class="btn btn-primary">Edit</a>
-          <form action="{{ route('category.destroy', ['id' => $viewData['category']['id']]) }}" method="POST" style="display:inline;">
+          <form action="{{ route('admin-category.destroy', ['id' => $viewData['category']['id']]) }}" method="POST" style="display:inline;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Delete</button>

@@ -20,7 +20,7 @@
                     <h4>Create User</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('custom-user.save') }}" method="POST">
+                    <form action="{{ route('admin-custom-user.save') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>

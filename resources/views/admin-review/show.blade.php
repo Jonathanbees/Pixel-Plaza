@@ -19,7 +19,7 @@
                     <p><strong>Client:</strong> {{ $viewData['review']->getClient() }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <form action="{{ route('review.destroy', $viewData['review']->getId()) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin-review.destroy', ['id'=> $viewData['review']->getId()]) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>

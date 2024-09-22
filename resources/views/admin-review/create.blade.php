@@ -21,7 +21,7 @@
                     <h4>Create Review</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('review.save') }}" method="POST">
+                    <form action="{{ route('admin-review.save') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="rating" class="form-label">Rating:</label>
