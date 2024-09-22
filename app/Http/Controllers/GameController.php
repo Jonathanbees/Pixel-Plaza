@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class GameController extends Controller
@@ -34,37 +33,6 @@ class GameController extends Controller
         $viewData['game'] = $game;
 
         return view('game.show')->with('viewData', $viewData);
-    }
-
-    public function create(): View
-    {
-        return view('game.create');
-    }
-
-    public function save(Request $request): RedirectResponse
-    {
-        Game::validate($request);
-
-        Game::create($request->only(['name', 'image', 'price', 'description', 'company']));
-
-        session()->flash('viewData.success', 'Game created successfully.');
-
-        return redirect()->route('game.index');
-    }
-
-    public function destroy(string $id): RedirectResponse
-    {
-        try {
-            Game::findOrFail($id)->delete();
-        } catch (Exception $e) {
-            $viewData['objectType'] = 'Game';
-
-            return redirect()->route('error.nonexistent')->with('viewData', $viewData);
-        }
-
-        session()->flash('viewData.success', 'Game deleted successfully.');
-
-        return redirect()->route('game.index');
     }
 
     public function shoppingCart(): View

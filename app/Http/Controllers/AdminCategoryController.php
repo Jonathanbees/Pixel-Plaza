@@ -9,15 +9,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class CategoryController extends Controller
+class AdminCategoryController extends Controller
 {
-    public function index(Request $request): View
+    public function index(): View
     {
         $viewData = [];
         $viewData['categories'] = Category::all();
         $viewData['success'] = session('viewData.success');
 
-        return view('category.index')->with('viewData', $viewData);
+        return view('admin-category.index')->with('viewData', $viewData);
     }
 
     public function show(string $id): View
@@ -26,12 +26,12 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $viewData['category'] = $category;
 
-        return view('category.show')->with('viewData', $viewData);
+        return view('admin-category.show')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        return view('category.create');
+        return view('admin-category.create');
     }
 
     public function save(Request $request): RedirectResponse
@@ -42,7 +42,7 @@ class CategoryController extends Controller
 
         session()->flash('viewData.success', 'Category created successfully.');
 
-        return redirect()->route('category.index');
+        return redirect()->route('admin-category.index');
     }
 
     public function destroy(string $id): RedirectResponse
@@ -52,6 +52,6 @@ class CategoryController extends Controller
 
         session()->flash('viewData.success', 'Category deleted successfully.');
 
-        return redirect()->route('category.index');
+        return redirect()->route('admin-category.index');
     }
 }

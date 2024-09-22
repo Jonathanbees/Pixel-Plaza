@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ReviewController extends Controller
+class AdminReviewController extends Controller
 {
     public function index(): View
     {
@@ -18,7 +18,7 @@ class ReviewController extends Controller
         $viewData['reviews'] = Review::all();
         $viewData['success'] = session('viewData.success');
 
-        return view('review.index')->with('viewData', $viewData);
+        return view('admin-review.index')->with('viewData', $viewData);
     }
 
     public function show(string $id): View|RedirectResponse
@@ -33,12 +33,12 @@ class ReviewController extends Controller
         }
         $viewData['review'] = $review;
 
-        return view('review.show')->with('viewData', $viewData);
+        return view('admin-review.show')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        return view('review.create');
+        return view('admin-review.create');
     }
 
     public function save(Request $request): RedirectResponse
@@ -49,7 +49,7 @@ class ReviewController extends Controller
 
         session()->flash('viewData.success', 'Review created successfully.');
 
-        return redirect()->route('review.index');
+        return redirect()->route('admin-review.index');
     }
 
     public function destroy(string $id): RedirectResponse
@@ -64,6 +64,6 @@ class ReviewController extends Controller
 
         session()->flash('viewData.success', 'Review deleted successfully.');
 
-        return redirect()->route('review.index');
+        return redirect()->route('admin-review.index');
     }
 }
