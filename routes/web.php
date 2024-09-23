@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
 
+
+
 // ========================== USER =================================
 // Games
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
@@ -19,7 +21,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/games', 'App\Http\Controllers\AdminGameController@index')->name('admin-game.index');
     Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
     Route::post('/admin/games/save', 'App\Http\Controllers\AdminGameController@save')->name('admin-game.save');
-    Route::get('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@show')->name('game.show');
+    Route::get('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@show')->name('admin-game.show');
     Route::delete('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@destroy')->name('admin-game.destroy');
 
     // Reviews
@@ -45,5 +47,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 // ========================== ERRORS =================================
 Route::get('/errors/nonexistent', 'App\Http\Controllers\ErrorController@nonexistent')->name('error.nonexistent');
-
 Auth::routes();
