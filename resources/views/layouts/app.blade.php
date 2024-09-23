@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+<!-- Esteban, Jonathan -->
 <head>
     <title>@yield('title', 'Online Store')</title>
     <meta charset="utf-8" />
