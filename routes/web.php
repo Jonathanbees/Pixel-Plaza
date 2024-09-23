@@ -9,12 +9,16 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index')
 
 
 // ========================== USER =================================
-// Games
+// Games (Accessible by anyone)
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
-Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
-Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
 Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
 
+// Routes for authenticated users only
+Route::middleware(['auth'])->group(function () {
+    // Shopping Cart
+    Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
+    Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
+});
 // ========================== ADMIN ================================
 Route::middleware(['auth', 'admin'])->group(function () {
     // Games
