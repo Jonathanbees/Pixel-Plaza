@@ -4,21 +4,24 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
-class CustomUser extends Model
+class CustomUser extends Model implements AuthenticatableContract
 {
-    use HasFactory;
+    use Authenticatable, HasFactory;
 
     /**
      * CUSTOM USER ATTRIBUTES
      * $this->attributes['id'] - int - contains the custom user primary key (id)
-     * $this->attributes['username'] - string - contains the custom user username
+     * $this->attributes['name'] - string - contains the custom user name
      * $this->attributes['email'] - string - contains the custom user email
      * $this->attributes['password'] - string - contains the custom user password
+     * $this->attributes['is_admin'] - boolean - indicates if the user is an admin
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company (optional)
@@ -28,9 +31,10 @@ class CustomUser extends Model
     public static function validate(Request $request): void
     {
         $request->validate([
-            'username' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:custom_users',
             'password' => 'required|string|min:8',
+            'is_admin' => 'boolean',
         ]);
     }
 
@@ -44,14 +48,14 @@ class CustomUser extends Model
         $this->attributes['id'] = $id;
     }
 
-    public function getUsername(): string
+    public function getName(): string
     {
-        return $this->attributes['username'];
+        return $this->attributes['name'];
     }
 
-    public function setUsername(string $username): void
+    public function setName(string $name): void
     {
-        $this->attributes['username'] = $username;
+        $this->attributes['name'] = $name;
     }
 
     public function getEmail(): string
@@ -72,6 +76,16 @@ class CustomUser extends Model
     public function setPassword(string $password): void
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function getIsAdmin(): bool
+    {
+        return $this->attributes['is_admin'];
+    }
+
+    public function setIsAdmin(bool $isAdmin): void
+    {
+        $this->attributes['is_admin'] = $isAdmin;
     }
 
     public function getCreatedAt(): ?string

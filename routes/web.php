@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
 
-
-
 // ========================== USER =================================
 // Games (Accessible by anyone)
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
