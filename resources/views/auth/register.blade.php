@@ -60,11 +60,16 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="is_admin" class="col-md-4 col-form-label text-md-right">{{ __('Admin User') }}</label>
-                        
-                            <div class="col-md-6">
-                                <input type="checkbox" id="is_admin" name="is_admin" {{ old('is_admin') ? 'checked' : '' }}>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="is_admin" name="is_admin" {{ old('is_admin') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="is_admin">
+                                        {{ __('Admin User') }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
 

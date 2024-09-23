@@ -49,6 +49,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $data['is_admin'] = isset($data['is_admin']) && $data['is_admin'] === 'on';
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -64,11 +66,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $data['is_admin'] = isset($data['is_admin']) && $data['is_admin'] === 'on';
+
         return CustomUser::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'is_admin' => isset($data['is_admin']) ? $data['is_admin'] : false,
+            'is_admin' => $data['is_admin'],
         ]);
     }
 }
