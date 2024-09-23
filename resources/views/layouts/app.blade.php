@@ -33,6 +33,17 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="{{ route('home.index') }}">Home</a>
                     <a class="nav-link" href="{{ route('game.index') }}">Games</a>
+                    <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
+                    @guest 
+                    <a class="nav-link active" href="{{ route('login') }}">Login</a> 
+                    <a class="nav-link active" href="{{ route('register') }}">Register</a> 
+                    @else 
+                    <form id="logout" action="{{ route('logout') }}" method="POST"> 
+                        <a role="button" class="nav-link active" 
+                        onclick="document.getElementById('logout').submit();">Logout</a> 
+                    @csrf 
+                    </form> 
+
                     <div class="nav-item dropdown">
                         <a class="nav-link shopping-cart-icon position-relative" href="{{ route('game.shoppingCart') }}" id="cartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-shopping-cart"></i>
@@ -42,17 +53,6 @@
                                 </span>
                             @endif
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cartDropdown">
-                            @if(session()->has('cart') && count(session('cart')) > 0)
-                                @foreach(App\Models\Game::find(session('cart')) as $game)
-                                    <li><a class="dropdown-item" href="{{ route('game.show', ['id' => $game->getId()]) }}">{{ $game->getName() }}</a></li>
-                                @endforeach
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('game.shoppingCart') }}">Go to cart</a>
-                            @else
-                                <li><a class="dropdown-item" href="#">No items in cart</a></li>
-                            @endif
-                        </ul>
                     </div>
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,6 +69,7 @@
                         <li><a class="dropdown-item" href="{{ route('admin-review.create') }}">Create Review</a></li>
                         </ul>
                     </div>
+                    @endguest 
                 </div>
             </div>
         </div>
