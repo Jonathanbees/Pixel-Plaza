@@ -11,9 +11,10 @@ class CustomUserFactory extends Factory
     public function definition(): array
     {
         return [
-            'username' => $this->faker->userName,
+            'name' => $this->faker->userName,
             'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('12344'),
+            'password' => bcrypt('123456789'),
+            'is_admin' => $this->faker->boolean,
             'created_at' => now(),
             'updated_at' => now(),
         ];
