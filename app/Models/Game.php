@@ -7,8 +7,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Game extends Model
 {
@@ -22,7 +24,7 @@ class Game extends Model
      * $this->attributes['price'] - float - contains the game price
      * $this->attributes['description'] - string - contains the game description
      * $this->attributes['reviewsSum'] - float - contains the sum of the reviews' ratings
-     * $this->attributes['reviewsCuantity'] - int - contains the number of reviews
+     * $this->attributes['reviewsCount'] - int - contains the number of reviews
      * $this->attributes['balance'] - string - contains the balance information
      * $this->attributes['balanceDate'] - timestamp - contains the balance date
      * $this->attributes['balanceReviewsCount'] - int - contains the count of balance reviews
@@ -30,6 +32,8 @@ class Game extends Model
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company that owns the game
      * $this->reviews - Review[] - contains the reviews associated with the game
+     * $this->categories - Category[] - contains the categories associated with the game
+     * $this->items - Item[] - contains the items associated with the game
      */
     protected $guarded = ['id'];
 
@@ -47,11 +51,6 @@ class Game extends Model
     public function getId(): int
     {
         return $this->attributes['id'];
-    }
-
-    public function setId(int $id): void
-    {
-        $this->attributes['id'] = $id;
     }
 
     public function getName(): string
@@ -94,11 +93,6 @@ class Game extends Model
         $this->attributes['description'] = $description;
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
     public function getReviewsSum(): ?float
     {
         return $this->attributes['reviewsSum'] ?? null;
@@ -109,14 +103,35 @@ class Game extends Model
         $this->attributes['reviewsSum'] = $reviewsSum;
     }
 
-    public function getReviewsCuantity(): ?int
+    public function getReviewsCount(): ?int
     {
-        return $this->attributes['reviewsCuantity'] ?? null;
+        return $this->attributes['reviewsCount'] ?? null;
     }
 
-    public function setReviewsCuantity(int $reviewsCuantity): void
+    public function setReviewsCount(int $reviewsCount): void
     {
-        $this->attributes['reviewsCuantity'] = $reviewsCuantity;
+        $this->attributes['reviewsCount'] = $reviewsCount;
+    }
+
+    public function incrementReviewStats(int $rating): void
+    {
+        $this->setReviewsCount(($this->getReviewsCount() ?? 0) + 1);
+        $this->setReviewsSum(($this->getReviewsSum() ?? 0) + $rating);
+        $this->save();
+    }
+
+    public function decrementReviewStats(int $rating): void
+    {
+        $this->setReviewsCount(max(($this->getReviewsCount() ?? 1) - 1, 0));
+        $this->setReviewsSum(max(($this->getReviewsSum() ?? $rating) - $rating, 0));
+        $this->save();
+    }
+
+    public function getRating(): float
+    {
+        $rating = $this->getReviewsCount() > 0 ? $this->getReviewsSum() / $this->getReviewsCount() : 0;
+
+        return round($rating, 1);
     }
 
     public function getBalance(): ?string
@@ -159,9 +174,14 @@ class Game extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function getCompany(): BelongsTo
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company()->first();
     }
 
     public function setCompany(Company $company): void
@@ -169,18 +189,65 @@ class Game extends Model
         $this->company()->associate($company);
     }
 
-    public function getReviews(): HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews()->get();
     }
 
     public function addReview(Review $review): void
     {
         $this->reviews()->save($review);
+        $this->incrementReviewStats($review->getRating());
     }
 
     public function removeReview(Review $review): void
     {
         $this->reviews()->detach($review);
+        $this->decrementReviewStats($review->getRating());
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'game_category');
+    }
+
+    public function getCategories(): Collection
+    {
+        return $this->categories()->get();
+    }
+
+    public function addCategory(Category $category): void
+    {
+        $this->categories()->attach($category);
+    }
+
+    public function removeCategory(Category $category): void
+    {
+        $this->categories()->detach($category);
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function getItems(): Collection
+    {
+        return $this->items()->get();
+    }
+
+    public function addItem(Item $item): void
+    {
+        $this->items()->save($item);
+    }
+
+    public function removeItem(Item $item): void
+    {
+        $this->items()->detach($item);
     }
 }

@@ -20,14 +20,14 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->text('description');
             $table->decimal('reviewsSum', 8, 2)->default(0);
-            $table->integer('reviewsCuantity')->default(0);
+            $table->integer('reviewsCount')->default(0);
             $table->string('balance')->nullable();
             $table->timestamp('balanceDate')->nullable();
             $table->integer('balanceReviewsCount')->default(0);
             $table->timestamps();
         });
 
-        Schema::create('category_game', function (Blueprint $table) {
+        Schema::create('game_category', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
@@ -40,7 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_game');
+        Schema::dropIfExists('game_category');
         Schema::dropIfExists('games');
     }
 };

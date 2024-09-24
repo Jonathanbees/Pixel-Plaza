@@ -1,34 +1,38 @@
 @extends('layouts.app')
-@section('title', "PIXEL PLAZA - List of games")
-@section('styles')
-    <link href="{{ asset('css/index_products.css') }}" rel="stylesheet">
-@endsection
-@section('content')
 
-<div class="container">
-    @if(session('viewData.success'))
+@section('title', 'Games - PIXEL PLAZA')
+
+@section('content')
+<div class="container mt-4">
+    @if (!empty($viewData['success']))
         <div class="alert alert-success">
-            {{ session('viewData.success') }}
+            {{ $viewData['success'] }}
         </div>
     @endif
-    <div class="row">
-        @foreach ($viewData["games"] as $game)
-        <div class="col-md-4 col-lg-3 mb-2">
-            <div class="card">
-                <img src="{{ $game->getImage() }}" class="card-img-top img-card">
-                <div class="card-body text-center">
-                    <div class="name-price">
-                        <h5 class="card-title">{{ $game->getName() }}</h5>
-                        <p class="card-text">{{ $game->getPrice() }}</p>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <a href="{{ route('admin-game.show', ['id'=> $game->getId()]) }}" class="btn bg-primary text-white">View</a>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="d-flex justify-content-center mb-3">
+                <a href="{{ route('admin-game.create') }}" class="btn btn-primary">Create Game</a>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action active">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-1">Game ID</h5>
+                        <strong class="text-muted">Name</strong>
+                        <strong class="text-muted">Price</strong>
                     </div>
                 </div>
+                @foreach ($viewData['games'] as $game)
+                    <a href="{{ route('admin-game.show', ['id'=> $game->getId()]) }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-1">{{ $game->getId() }}</h5>
+                            <small class="text-muted">{{ $game->getName() }}</small>
+                            <small class="text-muted">{{ $game->getPrice() }}$</small>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
-        @endforeach
     </div>
 </div>
-
 @endsection

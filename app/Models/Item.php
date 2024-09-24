@@ -9,18 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
-class Review extends Model
+class Item extends Model
 {
     use HasFactory;
 
     /**
-     * REVIEW ATTRIBUTES
-     * $this->attributes['id'] - int - contains the review primary key (id)
-     * $this->attributes['rating'] - int - contains the review rating
-     * $this->attributes['comment'] - string - contains the review comment
+     * ITEM ATTRIBUTES
+     * $this->attributes['id'] - int - contains the item primary key (id)
+     * $this->attributes['quantity'] - int - contains the quantity of the item
+     * $this->attributes['price'] - float - contains the price of the item
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->customUser - CustomUser - contains the associated CustomUser
+     * $this->order - Order - contains the associated Order
      * $this->game - Game - contains the associated Game
      */
     protected $guarded = ['id'];
@@ -28,10 +28,10 @@ class Review extends Model
     public static function validate(Request $request): void
     {
         $request->validate([
-            'rating' => 'required|numeric|min:1|max:5',
-            'comment' => 'required|max:500',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'order_id' => 'required|exists:orders,id',
             'game_id' => 'required|exists:games,id',
-            'custom_user_id' => 'required|exists:custom_users,id',
         ]);
     }
 
@@ -40,24 +40,24 @@ class Review extends Model
         return $this->attributes['id'];
     }
 
-    public function getRating(): int
+    public function getQuantity(): int
     {
-        return $this->attributes['rating'];
+        return $this->attributes['quantity'];
     }
 
-    public function setRating(int $rating): void
+    public function setQuantity(int $quantity): void
     {
-        $this->attributes['rating'] = $rating;
+        $this->attributes['quantity'] = $quantity;
     }
 
-    public function getComment(): string
+    public function getPrice(): float
     {
-        return $this->attributes['comment'];
+        return $this->attributes['price'];
     }
 
-    public function setComment(string $comment): void
+    public function setPrice(float $price): void
     {
-        $this->attributes['comment'] = $comment;
+        $this->attributes['price'] = $price;
     }
 
     public function getCreatedAt(): ?string
@@ -70,19 +70,19 @@ class Review extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function customUser(): BelongsTo
+    public function order(): BelongsTo
     {
-        return $this->belongsTo(CustomUser::class);
+        return $this->belongsTo(Order::class);
     }
 
-    public function getCustomUser(): ?CustomUser
+    public function getOrder(): ?Order
     {
-        return $this->customUser()->first();
+        return $this->order()->first();
     }
 
-    public function setCustomUser(CustomUser $customUser): void
+    public function setOrder(Order $order): void
     {
-        $this->customUser()->associate($customUser);
+        $this->order()->associate($order);
     }
 
     public function game(): BelongsTo

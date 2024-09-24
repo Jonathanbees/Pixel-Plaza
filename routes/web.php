@@ -11,14 +11,13 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index')
 // ========================== USER =================================
 // Games (Accessible by anyone)
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
-Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
 
-// Routes for authenticated users only
 Route::middleware(['auth'])->group(function () {
-    // Shopping Cart
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
     Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
+    Route::post('/games/{id}/add-review', 'App\Http\Controllers\GameController@addReview')->name('game.addReview');
 });
+Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
 
 // ========================== ADMIN ================================
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
@@ -27,6 +26,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
     Route::post('/admin/games/save', 'App\Http\Controllers\AdminGameController@save')->name('admin-game.save');
     Route::get('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@show')->name('admin-game.show');
+    Route::get('/admin/games/{id}/edit', 'App\Http\Controllers\AdminGameController@edit')->name('admin-game.edit');
+    Route::put('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@update')->name('admin-game.update');
     Route::delete('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@destroy')->name('admin-game.destroy');
 
     // Reviews
@@ -48,6 +49,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/custom-users/create', 'App\Http\Controllers\AdminCustomUserController@create')->name('admin-custom-user.create');
     Route::post('/admin/custom-users/save', 'App\Http\Controllers\AdminCustomUserController@save')->name('admin-custom-user.save');
     Route::get('/admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@show')->name('admin-custom-user.show');
+    Route::get('/admin/custom-users/{id}/edit', 'App\Http\Controllers\AdminCustomUserController@edit')->name('admin-custom-user.edit');
+    Route::put('/admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@update')->name('admin-custom-user.update');
     Route::delete('admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@destroy')->name('admin-custom-user.destroy');
 });
 

@@ -18,9 +18,10 @@
             <div class="card">
                 <img src="{{ $game->getImage() }}" class="card-img-top img-card">
                 <div class="card-body text-center">
-                    <div class="name-price">
-                        <h5 class="card-title">{{ $game->getName() }}</h5>
-                        <p class="card-text">{{ $game->getPrice() }}</p>
+                    <h5 class="card-title">{{ $game->getName() }}</h5>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Rating: {{ number_format($game->getRating(), 1) }}⭐</p>
+                        <p class="card-text">Price: {{ $game->getPrice() }}$</p>
                     </div>
                     <div class="btn-group" role="group">
                         <a href="{{ route('game.show', ['id'=> $game->getId()]) }}" class="btn bg-primary text-white">View</a>

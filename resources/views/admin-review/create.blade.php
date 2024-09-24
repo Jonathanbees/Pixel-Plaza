@@ -32,12 +32,20 @@
                             <textarea id="comment" name="comment" class="form-control" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="game" class="form-label">Game:</label>
-                            <input type="text" id="game" name="game" class="form-control" required>
+                            <label for="game_id" class="form-label">Game:</label>
+                            <select id="game_id" name="game_id" class="form-control" required>
+                                @foreach ($viewData['games'] as $game)
+                                    <option value="{{ $game->getId() }}">{{ $game->getName() }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="client" class="form-label">Client:</label>
-                            <input type="text" id="client" name="client" class="form-control" required>
+                            <label for="custom_user_id" class="form-label">Client:</label>
+                            <select id="custom_user_id" name="custom_user_id" class="form-control" required>
+                                @foreach ($viewData['customUsers'] as $customUser)
+                                    <option value="{{ $customUser->getId() }}">{{ $customUser->getName() }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Create</button>

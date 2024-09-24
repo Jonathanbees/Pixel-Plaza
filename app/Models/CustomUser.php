@@ -1,6 +1,6 @@
 <?php
 
-// Samuel
+// Samuel, Esteban
 
 namespace App\Models;
 
@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CustomUser extends Model implements AuthenticatableContract
 {
@@ -27,15 +28,21 @@ class CustomUser extends Model implements AuthenticatableContract
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company (optional)
      * $this->reviews - Review[] - contains the reviews associated with the custom user
+     * $this->orders - Order[] - contains the orders associated with the custom user
      */
     protected $guarded = ['id'];
 
-    public static function validate(Request $request): void
+    public static function validate(Request $request, ?int $id = null): void
     {
+        $uniqueEmailRule = 'unique:custom_users,email';
+        if ($id) {
+            $uniqueEmailRule .= ','.$id;
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:custom_users',
-            'password' => 'required|string|min:8',
+            'email' => 'required|string|email|max:255|'.$uniqueEmailRule,
+            'password' => $id ? 'nullable|string|min:8' : 'required|string|min:8',
             'is_admin' => 'boolean',
         ]);
     }
@@ -43,11 +50,6 @@ class CustomUser extends Model implements AuthenticatableContract
     public function getId(): int
     {
         return $this->attributes['id'];
-    }
-
-    public function setId(int $id): void
-    {
-        $this->attributes['id'] = $id;
     }
 
     public function getName(): string
@@ -100,9 +102,14 @@ class CustomUser extends Model implements AuthenticatableContract
         return $this->attributes['updated_at'];
     }
 
-    public function getCompany(): HasOne
+    public function company(): HasOne
     {
         return $this->hasOne(Company::class, 'user_id');
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company()->first();
     }
 
     public function setCompany(Company $company): void
@@ -110,9 +117,14 @@ class CustomUser extends Model implements AuthenticatableContract
         $this->company()->associate($company);
     }
 
-    public function getReviews(): HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews()->get();
     }
 
     public function addReview(Review $review): void
@@ -123,5 +135,25 @@ class CustomUser extends Model implements AuthenticatableContract
     public function removeReview(Review $review): void
     {
         $this->reviews()->detach($review);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function getOrders(): Collection
+    {
+        return $this->orders()->get();
+    }
+
+    public function addOrder(Order $order): void
+    {
+        $this->orders()->save($order);
+    }
+
+    public function removeOrder(Order $order): void
+    {
+        $this->orders()->detach($order);
     }
 }

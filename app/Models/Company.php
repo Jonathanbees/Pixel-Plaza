@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Company extends Model
 {
@@ -19,7 +20,6 @@ class Company extends Model
      * $this->attributes['id'] - int - contains the company primary key (id)
      * $this->attributes['name'] - string - contains the company name
      * $this->attributes['address'] - string - contains the company address
-     * $this->attributes['user_id'] - int - contains the user ID of the company's owner
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->user - CustomUser - contains the associated CustomUser (owner)
@@ -39,11 +39,6 @@ class Company extends Model
     public function getId(): int
     {
         return $this->attributes['id'];
-    }
-
-    public function setId(int $id): void
-    {
-        $this->attributes['id'] = $id;
     }
 
     public function getName(): string
@@ -66,16 +61,6 @@ class Company extends Model
         $this->attributes['address'] = $address;
     }
 
-    public function getUserId(): int
-    {
-        return $this->attributes['user_id'];
-    }
-
-    public function setUserId(int $userId): void
-    {
-        $this->attributes['user_id'] = $userId;
-    }
-
     public function getCreatedAt(): ?string
     {
         return $this->attributes['created_at'];
@@ -86,13 +71,33 @@ class Company extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function getCustomUser(): BelongsTo
+    public function customUser(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_id');
     }
 
-    public function getGames(): HasMany
+    public function getCustomUser(): ?CustomUser
+    {
+        return $this->customUser()->first();
+    }
+
+    public function games(): HasMany
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function getGames(): Collection
+    {
+        return $this->games()->get();
+    }
+
+    public function addGame(Game $game): void
+    {
+        $this->games()->save($game);
+    }
+
+    public function removeGame(Game $game): void
+    {
+        $this->games()->detach($game);
     }
 }
