@@ -15,8 +15,8 @@
                     <p><strong>ID:</strong> {{ $viewData['review']->getId() }}</p>
                     <p><strong>Rating:</strong> {{ $viewData['review']->getRating() }}</p>
                     <p><strong>Comment:</strong> {{ $viewData['review']->getComment() }}</p>
-                    <p><strong>Game:</strong> {{ $viewData['review']->getGame() }}</p>
-                    <p><strong>Client:</strong> {{ $viewData['review']->getClient() }}</p>
+                    <p><strong>Game:</strong> {{ $viewData['review']->getGame()->getName() }}</p>
+                    <p><strong>Client:</strong> {{ $viewData['review']->getCustomUser()->getName() }}</p>
                 </div>
                 <div class="card-footer text-center">
                     <form action="{{ route('admin-review.destroy', ['id'=> $viewData['review']->getId()]) }}" method="POST" class="d-inline">
