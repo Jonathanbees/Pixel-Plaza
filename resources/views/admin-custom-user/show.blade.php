@@ -18,6 +18,7 @@
                     <p><strong>Is Admin:</strong> {{ $viewData['user']->getIsAdmin() }}</p>
                 </div>
                 <div class="card-footer text-center">
+                    <a href="{{ route('admin-custom-user.edit', $viewData['user']->getId()) }}" class="btn btn-primary">Edit</a>
                     <form action="{{ route('admin-custom-user.destroy', $viewData['user']->getId()) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')

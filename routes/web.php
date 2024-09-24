@@ -48,6 +48,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/custom-users/create', 'App\Http\Controllers\AdminCustomUserController@create')->name('admin-custom-user.create');
     Route::post('/admin/custom-users/save', 'App\Http\Controllers\AdminCustomUserController@save')->name('admin-custom-user.save');
     Route::get('/admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@show')->name('admin-custom-user.show');
+    Route::get('/admin/custom-users/{id}/edit', 'App\Http\Controllers\AdminCustomUserController@edit')->name('admin-custom-user.edit');
+    Route::put('/admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@update')->name('admin-custom-user.update');
     Route::delete('admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@destroy')->name('admin-custom-user.destroy');
 });
 

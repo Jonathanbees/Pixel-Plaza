@@ -30,12 +30,17 @@ class CustomUser extends Model implements AuthenticatableContract
      */
     protected $guarded = ['id'];
 
-    public static function validate(Request $request): void
+    public static function validate(Request $request, int $id = null): void
     {
+        $uniqueEmailRule = 'unique:custom_users,email';
+        if ($id) {
+            $uniqueEmailRule .= ',' . $id;
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:custom_users',
-            'password' => 'required|string|min:8',
+            'email' => 'required|string|email|max:255|' . $uniqueEmailRule,
+            'password' => $id ? 'nullable|string|min:8' : 'required|string|min:8',
             'is_admin' => 'boolean',
         ]);
     }
