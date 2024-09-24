@@ -6,31 +6,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
-class Review extends Model
+class Order extends Model
 {
     use HasFactory;
 
     /**
-     * REVIEW ATTRIBUTES
-     * $this->attributes['id'] - int - contains the review primary key (id)
-     * $this->attributes['rating'] - int - contains the review rating
-     * $this->attributes['comment'] - string - contains the review comment
+     * ORDER ATTRIBUTES
+     * $this->attributes['id'] - int - contains the order primary key (id)
+     * $this->attributes['total_price'] - float - contains the total price of the order
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->customUser - CustomUser - contains the associated CustomUser
-     * $this->game - Game - contains the associated Game
+     * $this->items - Item[] - contains the items associated with the order
      */
     protected $guarded = ['id'];
 
     public static function validate(Request $request): void
     {
         $request->validate([
-            'rating' => 'required|numeric|min:1|max:5',
-            'comment' => 'required|max:500',
-            'game_id' => 'required|exists:games,id',
+            'total_price' => 'required|numeric|min:0',
             'custom_user_id' => 'required|exists:custom_users,id',
         ]);
     }
@@ -40,24 +38,14 @@ class Review extends Model
         return $this->attributes['id'];
     }
 
-    public function getRating(): int
+    public function getTotalPrice(): float
     {
-        return $this->attributes['rating'];
+        return $this->attributes['total_price'];
     }
 
-    public function setRating(int $rating): void
+    public function setTotalPrice(float $totalPrice): void
     {
-        $this->attributes['rating'] = $rating;
-    }
-
-    public function getComment(): string
-    {
-        return $this->attributes['comment'];
-    }
-
-    public function setComment(string $comment): void
-    {
-        $this->attributes['comment'] = $comment;
+        $this->attributes['total_price'] = $totalPrice;
     }
 
     public function getCreatedAt(): ?string
@@ -85,18 +73,23 @@ class Review extends Model
         $this->customUser()->associate($customUser);
     }
 
-    public function game(): BelongsTo
+    public function items(): HasMany
     {
-        return $this->belongsTo(Game::class);
+        return $this->hasMany(Item::class);
     }
 
-    public function getGame(): ?Game
+    public function getItems()
     {
-        return $this->game()->first();
+        return $this->items()->get();
     }
 
-    public function setGame(Game $game): void
+    public function addItem(Item $item): void
     {
-        $this->game()->associate($game);
+        $this->items()->save($item);
+    }
+
+    public function removeItem(Item $item): void
+    {
+        $this->items()->detach($item);
     }
 }
