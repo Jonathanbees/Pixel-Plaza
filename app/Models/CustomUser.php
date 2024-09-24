@@ -1,6 +1,6 @@
 <?php
 
-// Samuel
+// Samuel, Esteban
 
 namespace App\Models;
 
@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CustomUser extends Model implements AuthenticatableContract
 {
@@ -105,9 +106,14 @@ class CustomUser extends Model implements AuthenticatableContract
         return $this->attributes['updated_at'];
     }
 
-    public function getCompany(): HasOne
+    public function company(): HasOne
     {
         return $this->hasOne(Company::class, 'user_id');
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company()->first();
     }
 
     public function setCompany(Company $company): void
@@ -115,9 +121,14 @@ class CustomUser extends Model implements AuthenticatableContract
         $this->company()->associate($company);
     }
 
-    public function getReviews(): HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews()->get();
     }
 
     public function addReview(Review $review): void

@@ -16,10 +16,17 @@
                     <p><strong>Email:</strong> {{ $viewData['user']->getEmail() }}</p>
                     <p><strong>Password:</strong> {{ $viewData['user']->getPassword() }}</p>
                     <p><strong>Is Admin:</strong> {{ $viewData['user']->getIsAdmin() }}</p>
+                    <p><strong>Company:</strong> 
+                        @if ($viewData['user']->getCompany())
+                            {{ $viewData['user']->getCompany()->getName() }}
+                        @else
+                            No company associated
+                        @endif
+                    </p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('admin-custom-user.edit', $viewData['user']->getId()) }}" class="btn btn-primary">Edit</a>
-                    <form action="{{ route('admin-custom-user.destroy', $viewData['user']->getId()) }}" method="POST" class="d-inline">
+                    <a href="{{ route('admin-custom-user.edit', ['id' => $viewData['user']->getId()]) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('admin-custom-user.destroy', ['id' => $viewData['user']->getId()]) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>

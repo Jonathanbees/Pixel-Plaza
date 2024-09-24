@@ -24,8 +24,8 @@
                     <p><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('admin-game.edit', $viewData['game']->getId()) }}" class="btn btn-primary">Edit</a>
-                    <form action="{{ route('admin-game.destroy', $viewData['game']->getId()) }}" method="POST" class="d-inline">
+                    <a href="{{ route('admin-game.edit', ['id' => $viewData['game']->getId()]) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('admin-game.destroy', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
