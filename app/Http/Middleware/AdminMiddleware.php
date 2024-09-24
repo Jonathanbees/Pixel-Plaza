@@ -1,5 +1,7 @@
 <?php
 
+//Jonathan
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -16,10 +18,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->is_admin) {
-            return $next($request);
+        if (Auth::check()) {
+            if (Auth::user()->is_admin) {
+                return $next($request);
+            } else {
+                return redirect('/');
+            }
         }
 
-        return redirect('/');
+        return $next($request);
     }
 }
