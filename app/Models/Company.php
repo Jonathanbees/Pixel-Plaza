@@ -95,4 +95,14 @@ class Company extends Model
     {
         return $this->hasMany(Game::class);
     }
+
+    public function addGame(Game $game): void
+    {
+        $this->getGames()->save($game);
+    }
+
+    public function removeGame(Game $game): void
+    {
+        $this->getGames()->detach($game);
+    }
 }

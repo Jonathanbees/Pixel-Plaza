@@ -6,8 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class Category extends Model
 {
@@ -20,6 +20,7 @@ class Category extends Model
      * $this->attributes['description'] - string - contains the category description
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
+     * $this->games - Game[] - contains the games associated with the category
      */
     protected $guarded = ['id'];
 
@@ -61,13 +62,28 @@ class Category extends Model
         $this->attributes['description'] = $description;
     }
 
-    public function getCreatedAt(): ?Carbon
+    public function getCreatedAt(): ?string
     {
         return $this->attributes['created_at'];
     }
 
-    public function getUpdatedAt(): ?Carbon
+    public function getUpdatedAt(): ?string
     {
         return $this->attributes['updated_at'];
+    }
+
+    public function getGames(): BelongsToMany
+    {
+        return $this->belongsToMany(Game::class, 'game_category');
+    }
+
+    public function addGame(Game $game): void
+    {
+        $this->getGames()->attach($game);
+    }
+
+    public function removeGame(Game $game): void
+    {
+        $this->getGames()->detach($game);
     }
 }

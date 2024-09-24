@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->unsignedBigInteger('user_id'); // Foreign key for the owner
+            $table->unsignedBigInteger('custom_user_id'); // Foreign key for the owner
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('user_id')->references('id')->on('custom_users')->onDelete('cascade');
+            $table->foreign('custom_user_id')->references('id')->on('custom_users')->onDelete('cascade');
         });
     }
 

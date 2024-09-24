@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,7 @@ class Game extends Model
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company that owns the game
      * $this->reviews - Review[] - contains the reviews associated with the game
+     * $this->categories - Category[] - contains the categories associated with the game
      */
     protected $guarded = ['id'];
 
@@ -92,11 +94,6 @@ class Game extends Model
     public function setDescription(string $description): void
     {
         $this->attributes['description'] = $description;
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
     }
 
     public function getReviewsSum(): ?float
@@ -182,5 +179,20 @@ class Game extends Model
     public function removeReview(Review $review): void
     {
         $this->reviews()->detach($review);
+    }
+
+    public function getCategories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'game_category');
+    }
+
+    public function addCategory(Category $category): void
+    {
+        $this->categories()->attach($category);
+    }
+
+    public function removeCategory(Category $category): void
+    {
+        $this->categories()->detach($category);
     }
 }
