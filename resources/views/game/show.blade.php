@@ -57,7 +57,7 @@
             <h5>Add a Review</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('game.addReview', ['id' => $viewData['game']->getId()]) }}" method="POST">
+            <form action="{{ route('review.addReview', ['id' => $viewData['game']->getId()]) }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="rating" class="form-label">Rating</label>

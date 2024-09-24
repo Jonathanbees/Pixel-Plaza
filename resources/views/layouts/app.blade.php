@@ -33,45 +33,47 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="{{ route('home.index') }}">Home</a>
                     <a class="nav-link" href="{{ route('game.index') }}">Games</a>
+                    @auth
+                        <a class="nav-link active" href="{{ route('order.index') }}">Orders</a> 
+                    @endauth
                     <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
                     @guest 
-                    <a class="nav-link active" href="{{ route('login') }}">Login</a> 
-                    <a class="nav-link active" href="{{ route('register') }}">Register</a> 
+                        <a class="nav-link active" href="{{ route('login') }}">Login</a> 
+                        <a class="nav-link active" href="{{ route('register') }}">Register</a> 
                     @else 
-                    <form id="logout" action="{{ route('logout') }}" method="POST"> 
-                        <a role="button" class="nav-link active" 
-                        onclick="document.getElementById('logout').submit();">Logout</a> 
-                    @csrf 
-                    </form> 
-
-                    <div class="nav-item dropdown">
-                        <a class="nav-link shopping-cart-icon position-relative" href="{{ route('game.shoppingCart') }}" id="cartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-shopping-cart"></i>
-                            @if(session()->has('cart') && count(session('cart')) > 0)
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ count(session('cart')) }}
-                                </span>
-                            @endif
-                        </a>
-                    </div>
-                    @if(Auth::user()->is_admin)
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Admin
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                            <li><a class="dropdown-item" href="{{ route('admin-game.index') }}">Games</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-game.create') }}">Create Game</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-custom-user.index') }}">Users</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-custom-user.create') }}">Create User</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-category.index') }}">Categories</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-category.create') }}">Create Category</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-review.index') }}">Reviews</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin-review.create') }}">Create Review</a></li>
-                        </ul>
-                    </div>
-                    @endif
-                @endguest
+                        <div class="nav-item">
+                            <a class="nav-link shopping-cart-icon position-relative" href="{{ route('game.shoppingCart') }}">
+                                <i class="fa fa-shopping-cart"></i>
+                                @if(session()->has('cart') && count(session('cart')) > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {{ count(session('cart')) }}
+                                    </span>
+                                @endif
+                            </a>
+                        </div>
+                        @if(Auth::user()->is_admin)
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('admin-game.index') }}">Games</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-game.create') }}">Create Game</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-custom-user.index') }}">Users</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-custom-user.create') }}">Create User</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-category.index') }}">Categories</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-category.create') }}">Create Category</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-review.index') }}">Reviews</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-review.create') }}">Create Review</a></li>
+                                </ul>
+                            </div>
+                        @endif
+                        <form id="logout" action="{{ route('logout') }}" method="POST"> 
+                            <a role="button" class="nav-link active" 
+                            onclick="document.getElementById('logout').submit();">Logout</a> 
+                        @csrf 
+                        </form> 
+                    @endguest
                 </div>
             </div>
         </div>
@@ -90,6 +92,14 @@
                     <p>
                         Your one-stop shop for all your needs.
                     </p>
+                    @auth
+                        <p class="text-white">
+                            Logged as: {{ Auth::user()->getName() }}
+                            @if(Auth::user()->is_admin)
+                                (Admin)
+                            @endif
+                        </p>
+                    @endauth
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Links</h5>
