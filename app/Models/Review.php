@@ -75,9 +75,14 @@ class Review extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function getCustomUser(): BelongsTo
+    public function customUser(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class);
+    }
+
+    public function getCustomUser(): ?CustomUser
+    {
+        return $this->customUser()->first();
     }
 
     public function setCustomUser(CustomUser $customUser): void
@@ -85,9 +90,14 @@ class Review extends Model
         $this->customUser()->associate($customUser);
     }
 
-    public function getGame(): BelongsTo
+    public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
+    }
+
+    public function getGame(): ?Game
+    {
+        return $this->game()->first();
     }
 
     public function setGame(Game $game): void

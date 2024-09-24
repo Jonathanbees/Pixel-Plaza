@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Category extends Model
 {
@@ -72,18 +73,23 @@ class Category extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function getGames(): BelongsToMany
+    public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'game_category');
     }
 
+    public function getGames(): Collection
+    {
+        return $this->games()->get();
+    }
+
     public function addGame(Game $game): void
     {
-        $this->getGames()->attach($game);
+        $this->games()->attach($game);
     }
 
     public function removeGame(Game $game): void
     {
-        $this->getGames()->detach($game);
+        $this->games()->detach($game);
     }
 }
