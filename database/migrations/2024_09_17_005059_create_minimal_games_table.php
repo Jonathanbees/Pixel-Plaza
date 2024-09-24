@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->text('description');
             $table->decimal('reviewsSum', 8, 2)->default(0);
-            $table->integer('reviewsCuantity')->default(0);
+            $table->integer('reviewsCount')->default(0);
             $table->string('balance')->nullable();
             $table->timestamp('balanceDate')->nullable();
             $table->integer('balanceReviewsCount')->default(0);

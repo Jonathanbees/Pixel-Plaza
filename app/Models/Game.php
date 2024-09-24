@@ -23,7 +23,7 @@ class Game extends Model
      * $this->attributes['price'] - float - contains the game price
      * $this->attributes['description'] - string - contains the game description
      * $this->attributes['reviewsSum'] - float - contains the sum of the reviews' ratings
-     * $this->attributes['reviewsCuantity'] - int - contains the number of reviews
+     * $this->attributes['reviewsCount'] - int - contains the number of reviews
      * $this->attributes['balance'] - string - contains the balance information
      * $this->attributes['balanceDate'] - timestamp - contains the balance date
      * $this->attributes['balanceReviewsCount'] - int - contains the count of balance reviews
@@ -106,14 +106,14 @@ class Game extends Model
         $this->attributes['reviewsSum'] = $reviewsSum;
     }
 
-    public function getReviewsCuantity(): ?int
+    public function getReviewsCount(): ?int
     {
-        return $this->attributes['reviewsCuantity'] ?? null;
+        return $this->attributes['reviewsCount'] ?? null;
     }
 
-    public function setReviewsCuantity(int $reviewsCuantity): void
+    public function setReviewsCount(int $reviewsCount): void
     {
-        $this->attributes['reviewsCuantity'] = $reviewsCuantity;
+        $this->attributes['reviewsCount'] = $reviewsCount;
     }
 
     public function getBalance(): ?string
