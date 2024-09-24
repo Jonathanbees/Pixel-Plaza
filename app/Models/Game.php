@@ -33,6 +33,7 @@ class Game extends Model
      * $this->company - Company - contains the associated Company that owns the game
      * $this->reviews - Review[] - contains the reviews associated with the game
      * $this->categories - Category[] - contains the categories associated with the game
+     * $this->items - Item[] - contains the items associated with the game
      */
     protected $guarded = ['id'];
 
@@ -205,5 +206,25 @@ class Game extends Model
     public function removeCategory(Category $category): void
     {
         $this->categories()->detach($category);
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function getItems(): Collection
+    {
+        return $this->items()->get();
+    }
+
+    public function addItem(Item $item): void
+    {
+        $this->items()->save($item);
+    }
+
+    public function removeItem(Item $item): void
+    {
+        $this->items()->detach($item);
     }
 }

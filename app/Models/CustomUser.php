@@ -28,6 +28,7 @@ class CustomUser extends Model implements AuthenticatableContract
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company (optional)
      * $this->reviews - Review[] - contains the reviews associated with the custom user
+     * $this->orders - Order[] - contains the orders associated with the custom user
      */
     protected $guarded = ['id'];
 
@@ -134,5 +135,25 @@ class CustomUser extends Model implements AuthenticatableContract
     public function removeReview(Review $review): void
     {
         $this->reviews()->detach($review);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function getOrders(): Collection
+    {
+        return $this->orders()->get();
+    }
+
+    public function addOrder(Order $order): void
+    {
+        $this->orders()->save($order);
+    }
+
+    public function removeOrder(Order $order): void
+    {
+        $this->orders()->detach($order);
     }
 }
