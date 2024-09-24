@@ -5,6 +5,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Company;
+
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,7 +40,13 @@ class AdminGameController extends Controller
 
     public function create(): View
     {
-        return view('admin-game.create');
+        $viewData = [];
+        
+        $companies = Company::all();
+
+        $viewData['companies'] = $companies;
+
+        return view('admin-game.create')->with('viewData', $viewData);
     }
 
     public function save(Request $request): RedirectResponse

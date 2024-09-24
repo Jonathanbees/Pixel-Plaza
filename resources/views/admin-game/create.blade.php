@@ -42,11 +42,13 @@
                             <textarea id="description" name="description" class="form-control" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="company" class="form-label">Company:</label>
-                            <input type="text" id="company" name="company" class="form-control" required>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <label for="company_id" class="form-label">Company:</label>
+                            <select id="company_id" name="company_id" class="form-control" required>
+                                <option value="">Select a company</option>
+                                @foreach ($viewData['companies'] as $company)
+                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </form>
                 </div>
