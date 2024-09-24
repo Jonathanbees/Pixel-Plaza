@@ -31,6 +31,7 @@ class GameController extends Controller
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
         $viewData['game'] = $game;
+        $viewData['categories'] = $game->getCategories();
 
         return view('game.show')->with('viewData', $viewData);
     }
@@ -43,13 +44,14 @@ class GameController extends Controller
         $viewData = [];
         $viewData['games'] = $games;
 
+
         return view('game.shoppingCart')->with('viewData', $viewData);
     }
 
     public function addToShoppingCart(string $id): RedirectResponse
     {
         $cart = session()->get('cart', []);
-        if (! in_array($id, $cart)) {
+        if (!in_array($id, $cart)) {
             $cart[] = $id;
         }
         session()->put('cart', $cart);
