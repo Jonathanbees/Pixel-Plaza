@@ -1,7 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Game Details')
-@section('content')
 
+@section('title', 'Game Details')
+
+@section('content')
 <div class="container mt-4">
     <div class="card mb-3">
         <div class="row g-0">
@@ -13,9 +14,9 @@
                     <h5 class="card-title">{{ $viewData['game']->getName() }}</h5>
                     <p class="card-text"><strong>Price:</strong> ${{ $viewData['game']->getPrice() }}</p>
                     <p class="card-text"><strong>Description:</strong> {{ $viewData['game']->getDescription() }}</p>
-                    <p class="card-text"><strong>Company:</strong> {{ $viewData['game']->getCompany() }}</p>
+                    <p class="card-text"><strong>Company:</strong> {{ $viewData['game']->getCompany() ? $viewData['game']->getCompany()->getName() : 'N/A' }}</p>
                     <p class="card-text"><strong>Reviews Sum:</strong> {{ $viewData['game']->getReviewsSum() }}</p>
-                    <p class="card-text"><strong>Reviews Quantity:</strong> {{ $viewData['game']->getReviewsCuantity() }}</p>
+                    <p class="card-text"><strong>Reviews Count:</strong> {{ $viewData['game']->getReviewsCount() }}</p>
                     <p class="card-text"><strong>Balance:</strong> {{ $viewData['game']->getBalance() }}</p>
                     <p class="card-text"><strong>Balance Date:</strong> {{ $viewData['game']->getBalanceDate() }}</p>
                     <p class="card-text"><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
@@ -25,12 +26,11 @@
                 <div class="card-footer text-center">
                     <form action="{{ route('game.addToShoppingCart', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
