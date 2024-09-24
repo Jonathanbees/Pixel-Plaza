@@ -30,7 +30,7 @@ class AdminCustomUserController extends Controller
     {
         CustomUser::validate($request);
 
-        CustomUser::create($request->only(['username', 'email', 'password']));
+        CustomUser::create($request->only(['name', 'email', 'password', 'is_admin']));
 
         session()->flash('viewData.success', 'User created successfully.');
 

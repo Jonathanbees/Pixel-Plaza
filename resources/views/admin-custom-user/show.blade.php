@@ -12,9 +12,10 @@
                 </div>
                 <div class="card-body">
                     <p><strong>ID:</strong> {{ $viewData['user']->getId() }}</p>
-                    <p><strong>Username:</strong> {{ $viewData['user']->getUsername() }}</p>
+                    <p><strong>Username:</strong> {{ $viewData['user']->getName() }}</p>
                     <p><strong>Email:</strong> {{ $viewData['user']->getEmail() }}</p>
                     <p><strong>Password:</strong> {{ $viewData['user']->getPassword() }}</p>
+                    <p><strong>Is Admin:</strong> {{ $viewData['user']->getIsAdmin() }}</p>
                 </div>
                 <div class="card-footer text-center">
                     <form action="{{ route('admin-custom-user.destroy', $viewData['user']->getId()) }}" method="POST" class="d-inline">

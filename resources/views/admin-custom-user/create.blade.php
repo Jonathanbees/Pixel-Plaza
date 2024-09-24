@@ -23,8 +23,8 @@
                     <form action="{{ route('admin-custom-user.save') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username:</label>
-                            <input type="text" id="username" name="username" class="form-control" required>
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email:</label>
@@ -33,6 +33,13 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Password:</label>
                             <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="is_admin" class="form-label">Is Admin:</label>
+                            <select id="is_admin" name="is_admin" class="form-select" required>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Create</button>
