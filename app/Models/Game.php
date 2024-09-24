@@ -194,7 +194,7 @@ class Game extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'game_category');
     }
 
     public function getCategories(): Collection

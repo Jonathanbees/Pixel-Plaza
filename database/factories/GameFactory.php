@@ -32,7 +32,7 @@ class GameFactory extends Factory
     {
         return $this->afterCreating(function ($game) {
             $categories = Category::all()->random(rand(1, 3))->pluck('id');
-            $game->getCategories()->sync($categories);
+            $game->categories()->sync($categories);
         });
     }
 }
