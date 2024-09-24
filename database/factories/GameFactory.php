@@ -24,7 +24,7 @@ class GameFactory extends Factory
             'balanceReviewsCount' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-            'company_id' => Company::all()->random()->id,
+            'company_id' => Company::all()->random()->getId(),
         ];
     }
 

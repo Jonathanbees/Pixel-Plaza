@@ -5,15 +5,17 @@
 namespace Database\Factories;
 
 use App\Models\CustomUser;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CompanyFactory extends Factory
+class OrderFactory extends Factory
 {
-    public function definition(): array
+    protected $model = Order::class;
+
+    public function definition()
     {
         return [
-            'name' => $this->faker->company,
-            'address' => $this->faker->address,
+            'total_price' => 0,
             'custom_user_id' => CustomUser::all()->random()->getId(),
             'created_at' => now(),
             'updated_at' => now(),
