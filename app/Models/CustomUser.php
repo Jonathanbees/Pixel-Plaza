@@ -36,12 +36,12 @@ class CustomUser extends Model implements AuthenticatableContract
     {
         $uniqueEmailRule = 'unique:custom_users,email';
         if ($id) {
-            $uniqueEmailRule .= ','.$id;
+            $uniqueEmailRule .= ',' . $id;
         }
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|'.$uniqueEmailRule,
+            'email' => 'required|string|email|max:255|' . $uniqueEmailRule,
             'password' => $id ? 'nullable|string|min:8' : 'required|string|min:8',
             'is_admin' => 'boolean',
         ]);
@@ -104,7 +104,7 @@ class CustomUser extends Model implements AuthenticatableContract
 
     public function company(): HasOne
     {
-        return $this->hasOne(Company::class, 'user_id');
+        return $this->hasOne(Company::class, 'custom_user_id');
     }
 
     public function getCompany(): ?Company
