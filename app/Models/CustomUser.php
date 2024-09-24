@@ -8,6 +8,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class CustomUser extends Model implements AuthenticatableContract
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company (optional)
+     * $this->reviews - Review[] - contains the reviews associated with the custom user
      */
     protected $guarded = ['id'];
 
@@ -106,5 +108,20 @@ class CustomUser extends Model implements AuthenticatableContract
     public function setCompany(Company $company): void
     {
         $this->company()->associate($company);
+    }
+
+    public function getReviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function addReview(Review $review): void
+    {
+        $this->reviews()->save($review);
+    }
+
+    public function removeReview(Review $review): void
+    {
+        $this->reviews()->detach($review);
     }
 }
