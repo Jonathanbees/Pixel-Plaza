@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
+use App\Models\Item;
 use App\Models\Order;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -34,5 +36,38 @@ class OrderController extends Controller
         $viewData['items'] = $order->getItems();
 
         return view('order.show')->with('viewData', $viewData);
+    }
+
+    public function create(Request $request): RedirectResponse
+    {
+        $cart = session()->get('cart', []);
+        if (empty($cart)) {
+            return redirect()->route('game.shoppingCart')->with('viewData', ['success' => 'Your cart is empty.']);
+        }
+
+        $order = new Order;
+        $order->setCustomUser(Auth::user());
+        $order->setTotalPrice(0);
+        $order->save();
+
+        $totalPrice = 0;
+        foreach ($cart as $gameId) {
+            $game = Game::findOrFail($gameId);
+            $item = new Item;
+            $item->setOrder($order);
+            $item->setGame($game);
+            $item->setQuantity(1);
+            $item->setPrice($game->getPrice());
+            $item->save();
+
+            $totalPrice += $game->getPrice();
+        }
+
+        $order->setTotalPrice($totalPrice);
+        $order->save();
+
+        session()->forget('cart');
+
+        return redirect()->route('order.index')->with('viewData', ['success' => 'Order created successfully!']);
     }
 }
