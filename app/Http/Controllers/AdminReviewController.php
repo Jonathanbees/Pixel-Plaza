@@ -5,6 +5,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\Game;
+use App\Models\CustomUser;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,14 +40,18 @@ class AdminReviewController extends Controller
 
     public function create(): View
     {
-        return view('admin-review.create');
+        $viewData = [];
+        $viewData['games'] = Game::all();
+        $viewData['customUsers'] = CustomUser::all();
+
+        return view('admin-review.create')->with('viewData', $viewData);
     }
 
     public function save(Request $request): RedirectResponse
     {
         Review::validate($request);
 
-        Review::create($request->only(['rating', 'comment', 'game', 'client']));
+        Review::create($request->only(['rating', 'comment', 'game_id', 'custom_user_id']));
 
         session()->flash('viewData.success', 'Review created successfully.');
 
