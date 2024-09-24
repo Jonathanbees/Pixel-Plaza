@@ -5,6 +5,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\CustomUser;
 use App\Models\Game;
 use App\Models\Review;
@@ -18,9 +19,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Review::factory(10)->create();
-        Category::factory(10)->create();
+        CustomUser::factory(10)->create();
+        Company::factory(3)->create();
+        Category::factory(5)->create();
         Game::factory(20)->create();
-        CustomUser::factory(5)->create();
+        Review::factory(10)->create();
     }
 }
