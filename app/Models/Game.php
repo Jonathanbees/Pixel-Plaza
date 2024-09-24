@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class Game extends Model
@@ -20,7 +21,6 @@ class Game extends Model
      * $this->attributes['image'] - string - contains the game image URL
      * $this->attributes['price'] - float - contains the game price
      * $this->attributes['description'] - string - contains the game description
-     * $this->attributes['company_id'] - int - contains the company ID
      * $this->attributes['reviewsSum'] - float - contains the sum of the reviews' ratings
      * $this->attributes['reviewsCuantity'] - int - contains the number of reviews
      * $this->attributes['balance'] - string - contains the balance information
@@ -29,6 +29,7 @@ class Game extends Model
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
      * $this->company - Company - contains the associated Company that owns the game
+     * $this->reviews - Review[] - contains the reviews associated with the game
      */
     protected $guarded = ['id'];
 
@@ -93,24 +94,9 @@ class Game extends Model
         $this->attributes['description'] = $description;
     }
 
-    public function getCompanyId(): int
-    {
-        return $this->attributes['company_id'];
-    }
-
-    public function setCompanyId(int $companyId): void
-    {
-        $this->attributes['company_id'] = $companyId;
-    }
-
     public function categories()
     {
         return $this->belongsToMany(Category::class);
-    }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
     }
 
     public function getReviewsSum(): ?float
@@ -176,5 +162,25 @@ class Game extends Model
     public function getCompany(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function setCompany(Company $company): void
+    {
+        $this->company()->associate($company);
+    }
+
+    public function getReviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function addReview(Review $review): void
+    {
+        $this->reviews()->save($review);
+    }
+
+    public function removeReview(Review $review): void
+    {
+        $this->reviews()->detach($review);
     }
 }

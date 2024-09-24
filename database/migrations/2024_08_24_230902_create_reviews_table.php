@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->integer('rating');
             $table->string('comment');
-            $table->string('client');
-            $table->string('game');
             $table->timestamps();
         });
     }

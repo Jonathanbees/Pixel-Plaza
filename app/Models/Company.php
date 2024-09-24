@@ -10,22 +10,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
-/**
- * COMPANY ATTRIBUTES
- * $this->attributes['id'] - int - contains the company primary key (id)
- * $this->attributes['name'] - string - contains the company name
- * $this->attributes['address'] - string - contains the company address
- * $this->attributes['user_id'] - int - contains the user ID of the company's owner
- * $this->attributes['created_at'] - timestamp - contains the creation date
- * $this->attributes['updated_at'] - timestamp - contains the last update date
- * $this->user - CustomUser - contains the associated CustomUser (owner)
- * $this->games - Game[] - contains the associated games
- */
 class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'user_id'];
+    /**
+     * COMPANY ATTRIBUTES
+     * $this->attributes['id'] - int - contains the company primary key (id)
+     * $this->attributes['name'] - string - contains the company name
+     * $this->attributes['address'] - string - contains the company address
+     * $this->attributes['user_id'] - int - contains the user ID of the company's owner
+     * $this->attributes['created_at'] - timestamp - contains the creation date
+     * $this->attributes['updated_at'] - timestamp - contains the last update date
+     * $this->user - CustomUser - contains the associated CustomUser (owner)
+     * $this->games - Game[] - contains the associated games
+     */
+    protected $guarded = ['id'];
 
     public static function validate(Request $request)
     {
@@ -86,12 +86,12 @@ class Company extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function user(): BelongsTo
+    public function getCustomUser(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_id');
     }
 
-    public function games(): HasMany
+    public function getGames(): HasMany
     {
         return $this->hasMany(Game::class);
     }

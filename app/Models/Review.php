@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -18,10 +19,10 @@ class Review extends Model
      * $this->attributes['id'] - int - contains the review primary key (id)
      * $this->attributes['rating'] - int - contains the review rating
      * $this->attributes['comment'] - string - contains the review comment
-     * $this->attributes['client'] - string - contains the client name
-     * $this->attributes['game'] - string - contains the game name
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
+     * $this->customUser - CustomUser - contains the associated CustomUser
+     * $this->game - Game - contains the associated Game
      */
     protected $guarded = ['id'];
 
@@ -30,8 +31,8 @@ class Review extends Model
         $request->validate([
             'rating' => 'required|numeric|min:1|max:5',
             'comment' => 'required|max:500',
-            'game' => 'required',
-            'client' => 'required',
+            'game_id' => 'required|exists:games,id',
+            'custom_user_id' => 'required|exists:custom_users,id',
         ]);
     }
 
@@ -65,26 +66,6 @@ class Review extends Model
         $this->attributes['comment'] = $comment;
     }
 
-    public function getClient(): string
-    {
-        return $this->attributes['client'];
-    }
-
-    public function setClient(string $client): void
-    {
-        $this->attributes['client'] = $client;
-    }
-
-    public function getGame(): string
-    {
-        return $this->attributes['game'];
-    }
-
-    public function setGame(string $game): void
-    {
-        $this->attributes['game'] = $game;
-    }
-
     public function getCreatedAt(): ?Carbon
     {
         return $this->attributes['created_at'];
@@ -93,5 +74,25 @@ class Review extends Model
     public function getUpdatedAt(): ?Carbon
     {
         return $this->attributes['updated_at'];
+    }
+
+    public function getCustomUser(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class);
+    }
+
+    public function setCustomUser(CustomUser $customUser): void
+    {
+        $this->customUser()->associate($customUser);
+    }
+
+    public function getGame(): BelongsTo
+    {
+        return $this->belongsTo(Game::class);
+    }
+
+    public function setGame(Game $game): void
+    {
+        $this->game()->associate($game);
     }
 }

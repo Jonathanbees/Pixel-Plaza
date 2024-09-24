@@ -102,4 +102,9 @@ class CustomUser extends Model implements AuthenticatableContract
     {
         return $this->hasOne(Company::class, 'user_id');
     }
+
+    public function setCompany(Company $company): void
+    {
+        $this->company()->associate($company);
+    }
 }
