@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         Company::factory(3)->create();
         Category::factory(5)->create();
         Game::factory(20)->create();
-        Review::factory(10)->create();
+        Review::factory(80)->create();
         Order::factory(10)->create();
         Item::factory(30)->create();
     }

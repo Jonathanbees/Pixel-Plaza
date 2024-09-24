@@ -16,12 +16,20 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'custom_user_id' => CustomUser::all()->random()->id,
-            'game_id' => Game::all()->random()->id,
+            'custom_user_id' => CustomUser::all()->random()->getId(),
+            'game_id' => Game::all()->random()->getId(),
             'rating' => $this->faker->numberBetween($min = 1, $max = 5),
             'comment' => $this->faker->paragraph,
             'created_at' => now(),
             'updated_at' => now(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Review $review) {
+            $game = Game::find($review->getGame()->getId());
+            $game->incrementReviewStats($review->getRating());
+        });
     }
 }

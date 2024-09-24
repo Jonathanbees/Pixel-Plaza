@@ -12,11 +12,10 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index')
 // Games (Accessible by anyone)
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
 
-// Routes for authenticated users only
 Route::middleware(['auth'])->group(function () {
-    // Shopping Cart
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
     Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
+    Route::post('/games/{id}/add-review', 'App\Http\Controllers\GameController@addReview')->name('game.addReview');
 });
 Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
 

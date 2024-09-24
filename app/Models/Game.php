@@ -113,6 +113,27 @@ class Game extends Model
         $this->attributes['reviewsCount'] = $reviewsCount;
     }
 
+    public function incrementReviewStats(int $rating): void
+    {
+        $this->setReviewsCount(($this->getReviewsCount() ?? 0) + 1);
+        $this->setReviewsSum(($this->getReviewsSum() ?? 0) + $rating);
+        $this->save();
+    }
+
+    public function decrementReviewStats(int $rating): void
+    {
+        $this->setReviewsCount(max(($this->getReviewsCount() ?? 1) - 1, 0));
+        $this->setReviewsSum(max(($this->getReviewsSum() ?? $rating) - $rating, 0));
+        $this->save();
+    }
+
+    public function getRating(): float
+    {
+        $rating = $this->getReviewsCount() > 0 ? $this->getReviewsSum() / $this->getReviewsCount() : 0;
+
+        return round($rating, 1);
+    }
+
     public function getBalance(): ?string
     {
         return $this->attributes['balance'] ?? null;
@@ -181,11 +202,13 @@ class Game extends Model
     public function addReview(Review $review): void
     {
         $this->reviews()->save($review);
+        $this->incrementReviewStats($review->getRating());
     }
 
     public function removeReview(Review $review): void
     {
         $this->reviews()->detach($review);
+        $this->decrementReviewStats($review->getRating());
     }
 
     public function categories(): BelongsToMany
