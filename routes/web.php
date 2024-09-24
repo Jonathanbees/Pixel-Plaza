@@ -2,6 +2,8 @@
 
 // Esteban, Jonathan
 
+use App\Http\Middleware\AdminMiddleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
@@ -17,8 +19,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
     Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
 });
+
 // ========================== ADMIN ================================
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Games
     Route::get('/admin/games', 'App\Http\Controllers\AdminGameController@index')->name('admin-game.index');
     Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
@@ -47,6 +50,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@show')->name('admin-custom-user.show');
     Route::delete('admin/custom-users/{id}', 'App\Http\Controllers\AdminCustomUserController@destroy')->name('admin-custom-user.destroy');
 });
+
 // ========================== ERRORS =================================
 Route::get('/errors/nonexistent', 'App\Http\Controllers\ErrorController@nonexistent')->name('error.nonexistent');
 Auth::routes();

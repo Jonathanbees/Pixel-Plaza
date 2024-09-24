@@ -1,13 +1,10 @@
 <?php
 
-//Jonathan
-
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -19,19 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
-            Log::info('User is authenticated', ['user_id' => Auth::id(), 'is_admin' => Auth::user()->is_admin]);
-            if (Auth::user()->is_admin) {
-                return $next($request);
-            } else {
-                // User is authenticated but not an admin
-                return redirect('/')->with('error', 'You do not have admin access.');
-            }
+        if (Auth::check() && Auth::user()->is_admin) {
+            return $next($request);
         }
 
-        // User is not authenticated
-        Log::info('User is not authenticated', ['session' => session()->all()]);
-
-        return $next($request);
+        return redirect('/');
     }
 }
