@@ -13,9 +13,17 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index')
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
 
 Route::middleware(['auth'])->group(function () {
+    // Games
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
     Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
-    Route::post('/games/{id}/add-review', 'App\Http\Controllers\GameController@addReview')->name('game.addReview');
+
+    // Reviews
+    Route::post('/reviews/{id}/add-review', 'App\Http\Controllers\ReviewController@addReview')->name('review.addReview');
+
+    // Orders
+    Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('order.index');
+    Route::post('/orders/create', 'App\Http\Controllers\OrderController@create')->name('order.create');
+    Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('order.show');
 });
 Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
 

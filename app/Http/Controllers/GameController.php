@@ -5,11 +5,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use App\Models\Review;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class GameController extends Controller
@@ -36,26 +33,6 @@ class GameController extends Controller
         $viewData['game'] = $game;
 
         return view('game.show')->with('viewData', $viewData);
-    }
-
-    public function addReview(Request $request, string $id): RedirectResponse
-    {
-        $game = Game::findOrFail($id);
-
-        $request->merge([
-            'game_id' => $id,
-            'custom_user_id' => Auth::id(),
-        ]);
-
-        Review::validate($request);
-
-        $review = new Review;
-        $review->setRating($request->input('rating'));
-        $review->setComment($request->input('comment'));
-        $review->setCustomUser(Auth::user());
-        $game->addReview($review);
-
-        return redirect()->route('game.show', ['id' => $id]);
     }
 
     public function shoppingCart(): View

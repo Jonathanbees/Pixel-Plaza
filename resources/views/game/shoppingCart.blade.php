@@ -10,7 +10,10 @@
 <div class="container mt-4">
     @if(count($viewData['games']) > 0)
         <div class="d-flex justify-content-center mb-3">
-            <a href="#" class="btn btn-primary">Order</a>
+            <form action="{{ route('order.create') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">Order Now</button>
+            </form>
         </div>
         <div class="list-group">
             <div class="list-group-item list-group-item-action active">
