@@ -27,6 +27,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
     Route::post('/admin/games/save', 'App\Http\Controllers\AdminGameController@save')->name('admin-game.save');
     Route::get('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@show')->name('admin-game.show');
+    Route::get('/admin/games/{id}/edit', 'App\Http\Controllers\AdminGameController@edit')->name('admin-game.edit');
+    Route::put('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@update')->name('admin-game.update');
     Route::delete('/admin/games/{id}', 'App\Http\Controllers\AdminGameController@destroy')->name('admin-game.destroy');
 
     // Reviews

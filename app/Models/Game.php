@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Game extends Model
 {
@@ -156,9 +157,14 @@ class Game extends Model
         return $this->attributes['updated_at'];
     }
 
-    public function getCompany(): BelongsTo
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company()->first();
     }
 
     public function setCompany(Company $company): void
@@ -166,9 +172,14 @@ class Game extends Model
         $this->company()->associate($company);
     }
 
-    public function getReviews(): HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews()->get();
     }
 
     public function addReview(Review $review): void
@@ -181,9 +192,14 @@ class Game extends Model
         $this->reviews()->detach($review);
     }
 
-    public function getCategories(): BelongsToMany
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'game_category');
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function getCategories(): Collection
+    {
+        return $this->categories()->get();
     }
 
     public function addCategory(Category $category): void
