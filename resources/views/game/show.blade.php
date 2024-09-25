@@ -1,17 +1,24 @@
 @extends('layouts.app')
 
 @section('title', 'Game Details')
-
+@section('styles')
+    <link href="{{ asset('css/show_products.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="container mt-4">
     <div class="card mb-3">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="{{ $viewData['game']->getImage() }}" class="img-fluid rounded-start" alt="{{ $viewData['game']->getName() }}">
+        <div class="row g-0 block">
+            <div class="col-md-4 block">
+                <img src="{{ $viewData['game']->getImage() }}" class="img-fluid rounded-start block" alt="{{ $viewData['game']->getName() }}">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">{{ $viewData['game']->getName() }}</h5>
+                    <p class="card-text"><strong>Categories:</strong>
+                        @foreach ($viewData['categories'] as $category)
+                            {{ $category->getName() }}@if (!$loop->last), @endif
+                        @endforeach
+                    </p>
                     <p class="card-text"><strong>Price:</strong> ${{ $viewData['game']->getPrice() }}</p>
                     <p class="card-text"><strong>Description:</strong> {{ $viewData['game']->getDescription() }}</p>
                     <p class="card-text"><strong>Company:</strong> {{ $viewData['game']->getCompany() ? $viewData['game']->getCompany()->getName() : 'N/A' }}</p>
@@ -21,6 +28,7 @@
                     <p class="card-text"><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
                     <p class="card-text"><strong>Created At:</strong> {{ $viewData['game']->getCreatedAt() }}</p>
                     <p class="card-text"><strong>Updated At:</strong> {{ $viewData['game']->getUpdatedAt() }}</p>
+
                 </div>
                 <div class="card-footer text-center">
                     <form action="{{ route('game.addToShoppingCart', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
