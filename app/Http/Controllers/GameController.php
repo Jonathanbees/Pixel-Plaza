@@ -5,11 +5,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Utils\FormattingUtils;
 use Exception;
+use Gemini;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
-
+use Illuminate\View\View;
 
 class GameController extends Controller
 {
@@ -46,14 +47,13 @@ class GameController extends Controller
         $viewData = [];
         $viewData['games'] = $games;
 
-
         return view('game.shoppingCart')->with('viewData', $viewData);
     }
 
     public function addToShoppingCart(string $id): RedirectResponse
     {
         $cart = session()->get('cart', []);
-        if (!in_array($id, $cart)) {
+        if (! in_array($id, $cart)) {
             $cart[] = $id;
         }
         session()->put('cart', $cart);
@@ -61,20 +61,20 @@ class GameController extends Controller
         return redirect()->route('game.index');
     }
 
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $query = $request->input('query');
 
         $games = Game::where('name', 'like', "%{$query}%")
-                    ->get();
+            ->get();
 
         $viewData = [];
-        $viewData["games"] = $games;
+        $viewData['games'] = $games;
 
         return view('game.index')->with('viewData', $viewData);
     }
 
-    public function mostPurchased(Request $request) 
+    public function mostPurchased(Request $request): View
     {
         $limit = $request->input('limit', 4);
 
@@ -84,10 +84,11 @@ class GameController extends Controller
             ->map(function ($game) {
                 $totalPurchased = $game->items->sum('quantity');
                 $game->total_purchased = $totalPurchased;
+
                 return $game;
             })
-            ->sortByDesc('total_purchased') 
-            ->take($limit); 
+            ->sortByDesc('total_purchased')
+            ->take($limit);
 
         $viewData = [];
         $viewData['games'] = $games;
@@ -95,4 +96,33 @@ class GameController extends Controller
         return view('game.mostPurchased')->with('viewData', $viewData);
     }
 
+    public function generateBalance(Request $request, string $id): RedirectResponse
+    {
+        try {
+            $game = Game::findOrFail($id);
+            $reviews = $game->getReviews();
+            $comments = $reviews->pluck('comment')->implode(' | ');
+
+            $prompt = "Generate a summary of the balance of the next comments about the game {$game->getName()} that has a rating of {$game->getRating()}, also, say the reasons of the good and bad comments, that's the vital part: {$comments}";
+
+            $apiKey = env('GEMINI_API_KEY');
+            $client = Gemini::client($apiKey);
+
+            $result = $client->geminiPro()->generateContent($prompt);
+
+            $balanceMarkdown = $result->text();
+            $balanceHtml = FormattingUtils::convertMarkdownToHtml($balanceMarkdown);
+
+            $game->setBalance($balanceHtml);
+            $game->setBalanceDate(now());
+            $game->setBalanceReviewsCount($reviews->count());
+            $game->save();
+
+            return redirect()->route('game.show', ['id' => $id])->with('viewData', ['success' => 'Balance generated successfully!']);
+        } catch (Exception $e) {
+            $viewData['objectType'] = $e->getMessage(); // provisional
+
+            return redirect()->route('error.nonexistent')->with('viewData', $viewData);
+        }
+    }
 }

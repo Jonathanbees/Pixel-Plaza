@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('reviewsSum', 8, 2)->default(0);
             $table->integer('reviewsCount')->default(0);
-            $table->string('balance')->nullable();
+            $table->text('balance')->nullable();
             $table->timestamp('balanceDate')->nullable();
             $table->integer('balanceReviewsCount')->default(0);
             $table->timestamps();

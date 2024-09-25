@@ -31,7 +31,10 @@ Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('gam
 
 // ========================== ADMIN ================================
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    // Games
+    // Games (User)
+    Route::post('/games/{id}/generate-balance', 'App\Http\Controllers\GameController@generateBalance')->name('game.generateBalance');
+
+    // Games (Admin)
     Route::get('/admin/games', 'App\Http\Controllers\AdminGameController@index')->name('admin-game.index');
     Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
     Route::post('/admin/games/save', 'App\Http\Controllers\AdminGameController@save')->name('admin-game.save');

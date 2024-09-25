@@ -6,6 +6,11 @@
 @endsection
 @section('content')
 <div class="container mt-4">
+    @if (!empty($viewData['success']))
+        <div class="alert alert-success">
+            {{ $viewData['success'] }}
+        </div>
+    @endif
     <div class="card mb-3">
         <div class="row g-0 block">
             <div class="col-md-4 block">
@@ -23,9 +28,6 @@
                     <p class="card-text"><strong>Description:</strong> {{ $viewData['game']->getDescription() }}</p>
                     <p class="card-text"><strong>Company:</strong> {{ $viewData['game']->getCompany() ? $viewData['game']->getCompany()->getName() : 'N/A' }}</p>
                     <p class="card-text"><strong>Rating:</strong> {{ $viewData['game']->getRating() }}⭐</p>
-                    <p class="card-text"><strong>Balance:</strong> {{ $viewData['game']->getBalance() }}</p>
-                    <p class="card-text"><strong>Balance Date:</strong> {{ $viewData['game']->getBalanceDate() }}</p>
-                    <p class="card-text"><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
                     <p class="card-text"><strong>Created At:</strong> {{ $viewData['game']->getCreatedAt() }}</p>
                     <p class="card-text"><strong>Updated At:</strong> {{ $viewData['game']->getUpdatedAt() }}</p>
                 </div>
@@ -34,12 +36,14 @@
                         @csrf
                         <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </form>
-                    @if(Auth::user()->is_admin)
-                        <form action="{{ route('game.generateBalance', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-secondary">Generate Balance</button>
-                        </form>
-                    @endif
+                    @auth
+                        @if(Auth::user()->is_admin)
+                            <form action="{{ route('game.generateBalance', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-secondary">Generate Balance</button>
+                            </form>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>
@@ -52,7 +56,7 @@
                 <h5>Balance</h5>
             </div>
             <div class="card-body">
-                <p><strong>Balance:</strong> {{ $viewData['game']->getBalance() }}</p>
+                <p><strong>Balance:</strong> {!! $viewData['game']->getBalance() !!}</p>
                 <p><strong>Balance Date:</strong> {{ $viewData['game']->getBalanceDate() }}</p>
                 <p><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
             </div>
