@@ -14,6 +14,7 @@ Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.in
 Route::get('/games/search', 'App\Http\Controllers\GameController@search')->name('game.search');
 Route::get('/games/most-purchased', 'App\Http\Controllers\GameController@mostPurchased')->name('game.mostPurchased');
 Route::get('/company/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
+Route::get('/games/top-categories', 'App\Http\Controllers\GameController@topCategories')->name('game.topCategories');
 
 Route::middleware(['auth'])->group(function () {
     // Games
