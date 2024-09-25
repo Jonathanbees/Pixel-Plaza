@@ -76,21 +76,18 @@ class GameController extends Controller
 
     public function mostPurchased(Request $request) 
     {
-        // Obtener el límite de juegos desde la petición, con valor por defecto de 5
-        $limit = $request->input('limit', 5);
+        $limit = $request->input('limit', 4);
 
         $games = Game::with(['items'])
             ->has('items')
             ->get()
             ->map(function ($game) {
-                // Calcular la suma de 'quantity' para cada juego
                 $totalPurchased = $game->items->sum('quantity');
-                // Agregar la suma como un atributo adicional al juego
                 $game->total_purchased = $totalPurchased;
                 return $game;
             })
-            ->sortByDesc('total_purchased') // Ordenar los juegos por total de compras
-            ->take($limit); // Limitar el número de juegos devueltos
+            ->sortByDesc('total_purchased') 
+            ->take($limit); 
 
         $viewData = [];
         $viewData['games'] = $games;

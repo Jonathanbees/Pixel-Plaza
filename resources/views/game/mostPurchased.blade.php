@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<!-- Samuel B) --->
 @section('title', "PIXEL PLAZA - Most Purchased Games")
 @section('styles')
     <link href="{{ asset('css/index_products.css') }}" rel="stylesheet">
@@ -14,14 +14,15 @@
         </div>
     @endif
 
-    <h2 class="mb-4">Most Purchased Games</h2>
+    <h2 class="mb-4" style="color:white">Most Purchased Games</h2>
 
     <form method="GET" action="{{ route('game.mostPurchased') }}">
-        <div class="form-group">
-            <label for="limit">Number of Games to Display:</label>
-            <input type="number" name="limit" id="limit" class="form-control" value="{{ request('limit', 5) }}" min="1">
+        <label for="limit" style="color:white">Number of Games to Display:</label>
+        <div class="input-group">
+            <input type="number" name="limit" id="limit" class="form-control" value="{{ request('limit', 4) }}" min="1">
+            <button type="submit" class="btn btn-primary">Show</button>
+            <a href="{{ route('game.mostPurchased') }}" class="btn btn-secondary">Reset</a> 
         </div>
-        <button type="submit" class="btn btn-primary mt-2">Show</button>
     </form>
 
     <div class="row mt-4">

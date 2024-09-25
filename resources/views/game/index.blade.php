@@ -20,6 +20,8 @@
                     <input type="text" name="query" class="form-control" placeholder="Search by name or company" value="{{ request('query') }}">
                     <button class="btn btn-primary" type="submit">Search</button>
                     <a href="{{ route('game.index') }}" class="btn btn-secondary">Reset</a> 
+                    <a href="{{ route('game.mostPurchased') }}" class="btn btn-warning">Most Popular</a> 
+
                 </div>
             </form>
         </div>
