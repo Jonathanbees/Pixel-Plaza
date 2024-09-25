@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<!-- Jonathan -->
+<!-- Jonathan, Samuel -->
 @section('title', "PIXEL PLAZA - List of games")
 @section('styles')
     <link href="{{ asset('css/index_products.css') }}" rel="stylesheet">
@@ -12,6 +12,19 @@
             {{ session('viewData.success') }}
         </div>
     @endif
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form action="{{ route('game.search') }}" method="GET">
+                <div class="input-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search by name or company" value="{{ request('query') }}">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                    <a href="{{ route('game.index') }}" class="btn btn-secondary">Reset</a> 
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="row">
         @foreach ($viewData["games"] as $game)
         <div class="col-md-4 col-lg-3 mb-2">

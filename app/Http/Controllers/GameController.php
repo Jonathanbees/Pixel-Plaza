@@ -1,6 +1,6 @@
 <?php
 
-// Esteban
+// Esteban, Samuel
 
 namespace App\Http\Controllers;
 
@@ -8,6 +8,8 @@ use App\Models\Game;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+
 
 class GameController extends Controller
 {
@@ -56,4 +58,42 @@ class GameController extends Controller
 
         return redirect()->route('game.index');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $games = Game::where('name', 'like', "%{$query}%")
+                    ->get();
+
+        $viewData = [];
+        $viewData["games"] = $games;
+
+        return view('game.index')->with('viewData', $viewData);
+    }
+
+    public function mostPurchased(Request $request) 
+    {
+        // Obtener el límite de juegos desde la petición, con valor por defecto de 5
+        $limit = $request->input('limit', 5);
+
+        $games = Game::with(['items'])
+            ->has('items')
+            ->get()
+            ->map(function ($game) {
+                // Calcular la suma de 'quantity' para cada juego
+                $totalPurchased = $game->items->sum('quantity');
+                // Agregar la suma como un atributo adicional al juego
+                $game->total_purchased = $totalPurchased;
+                return $game;
+            })
+            ->sortByDesc('total_purchased') // Ordenar los juegos por total de compras
+            ->take($limit); // Limitar el número de juegos devueltos
+
+        $viewData = [];
+        $viewData['games'] = $games;
+
+        return view('game.mostPurchased')->with('viewData', $viewData);
+    }
+
 }

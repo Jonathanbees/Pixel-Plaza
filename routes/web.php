@@ -11,6 +11,8 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index')
 // ========================== USER =================================
 // Games (Accessible by anyone)
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
+Route::get('/games/search', 'App\Http\Controllers\GameController@search')->name('game.search');
+Route::get('/games/most-purchased', 'App\Http\Controllers\GameController@mostPurchased')->name('game.mostPurchased');
 
 Route::middleware(['auth'])->group(function () {
     // Games
