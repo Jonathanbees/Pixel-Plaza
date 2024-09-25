@@ -28,17 +28,36 @@
                     <p class="card-text"><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
                     <p class="card-text"><strong>Created At:</strong> {{ $viewData['game']->getCreatedAt() }}</p>
                     <p class="card-text"><strong>Updated At:</strong> {{ $viewData['game']->getUpdatedAt() }}</p>
-
                 </div>
                 <div class="card-footer text-center">
                     <form action="{{ route('game.addToShoppingCart', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </form>
+                    @if(Auth::user()->is_admin)
+                        <form action="{{ route('game.generateBalance', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-secondary">Generate Balance</button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Balance Section -->
+    @if ($viewData['game']->getBalance())
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Balance</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Balance:</strong> {{ $viewData['game']->getBalance() }}</p>
+                <p><strong>Balance Date:</strong> {{ $viewData['game']->getBalanceDate() }}</p>
+                <p><strong>Balance Reviews Count:</strong> {{ $viewData['game']->getBalanceReviewsCount() }}</p>
+            </div>
+        </div>
+    @endif
 
     <!-- Reviews Section -->
     <div class="card mt-4">
