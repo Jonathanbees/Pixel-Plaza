@@ -13,6 +13,7 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index')
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
 Route::get('/games/search', 'App\Http\Controllers\GameController@search')->name('game.search');
 Route::get('/games/most-purchased', 'App\Http\Controllers\GameController@mostPurchased')->name('game.mostPurchased');
+Route::get('/company/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
 
 Route::middleware(['auth'])->group(function () {
     // Games
