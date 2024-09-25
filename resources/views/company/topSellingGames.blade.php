@@ -14,7 +14,7 @@
             <div class="card-body">
                 <ul>
                     @foreach ($company->topSellingGames as $game)
-                        <li>{{ $game->getName() }} - {{ $game->total_purchased }} sales</li>
+                        <li>{{ $game->getName() }} - {{ $game->totalPurchased }} sales</li>
                     @endforeach
                 </ul>
             </div>

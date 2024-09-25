@@ -5,7 +5,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use App\Models\Category;
 use App\Utils\FormattingUtils;
 use Exception;
 use Gemini;
@@ -54,7 +53,7 @@ class GameController extends Controller
     public function addToShoppingCart(string $id): RedirectResponse
     {
         $cart = session()->get('cart', []);
-        if (!in_array($id, $cart)) {
+        if (! in_array($id, $cart)) {
             $cart[] = $id;
         }
         session()->put('cart', $cart);
@@ -125,17 +124,5 @@ class GameController extends Controller
 
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
-    }
-    public function topCategories(): View
-    {
-        $categories = Category::withCount('games')
-            ->orderBy('games_count', 'desc')
-            ->take(5)
-            ->get();
-
-        $viewData = [];
-        $viewData['categories'] = $categories;
-
-        return view('game.topCategories')->with('viewData', $viewData);
     }
 }

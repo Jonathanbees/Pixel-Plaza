@@ -1,9 +1,10 @@
 <?php
 
+// Jonathan, Esteban
+
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CompanyController extends Controller
@@ -12,16 +13,16 @@ class CompanyController extends Controller
     {
         $companies = Company::with(['games.items'])->get();
 
+        // topSellingGames and totalPurchased are not attributes of the Company or Game model
+        // We calculate them manually, and then add them to the models temporarily for the sort and the show.
         $companies->each(function ($company) {
-            // Mapping games to find most purchased
-            $company->topSellingGames = $company->games->map(function ($game) {
+            $company->topSellingGames = $company->getGames()->map(function ($game) {
                 $totalPurchased = $game->getItems()->sum('quantity');
-                $game->total_purchased = $totalPurchased;
+                $game->totalPurchased = $totalPurchased;
 
                 return $game;
-            })->sortByDesc('total_purchased')->take(5);
+            })->sortByDesc('totalPurchased')->take(5);
         });
-
 
         $viewData = [];
         $viewData['companies'] = $companies;
