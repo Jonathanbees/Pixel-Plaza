@@ -73,7 +73,7 @@ class Company extends Model
 
     public function customUser(): BelongsTo
     {
-        return $this->belongsTo(CustomUser::class, 'user_id');
+        return $this->belongsTo(CustomUser::class, 'custom_user_id');
     }
 
     public function getCustomUser(): ?CustomUser
