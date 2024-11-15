@@ -8,12 +8,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
 
-// ========================== USER =================================
+// ========================== GUEST USER =================================
 // Games (Accessible by anyone)
 Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
 Route::get('/games/search', 'App\Http\Controllers\GameController@search')->name('game.search');
 Route::get('/games/most-purchased', 'App\Http\Controllers\GameController@mostPurchased')->name('game.mostPurchased');
 
+// Categories
+Route::get('/categories/top-categories', 'App\Http\Controllers\CategoryController@topCategories')->name('category.topCategories');
+
+// Company
+Route::get('/companies/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
+
+// ========================== AUTH USER =================================
 Route::middleware(['auth'])->group(function () {
     // Games
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
@@ -27,11 +34,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/orders/create', 'App\Http\Controllers\OrderController@create')->name('order.create');
     Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('order.show');
 });
+
+// Games again, guest user. This NEEDS to be here, or the "/games/<something>" routes will not work.
 Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
 
 // ========================== ADMIN ================================
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    // Games
+    // Games (User)
+    Route::post('/games/{id}/generate-balance', 'App\Http\Controllers\GameController@generateBalance')->name('game.generateBalance');
+
+    // Games (Admin)
     Route::get('/admin/games', 'App\Http\Controllers\AdminGameController@index')->name('admin-game.index');
     Route::get('/admin/games/create', 'App\Http\Controllers\AdminGameController@create')->name('admin-game.create');
     Route::post('/admin/games/save', 'App\Http\Controllers\AdminGameController@save')->name('admin-game.save');
