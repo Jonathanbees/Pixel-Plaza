@@ -5,12 +5,12 @@
 @endsection
 @section('content')
 <div class="text-center">
-    <h1>Welcome to PIXEL PLAZA</h1>
-    <a href="{{ route('game.index') }}" class="btn btn-primary mt-3">View Games</a>
-    <a href="{{ route('game.shoppingCart') }}" class="btn btn-secondary mt-3">View Shopping Cart</a>
-    <a href="{{ route('game.mostPurchased') }}" class="btn btn-success mt-3">Most Purchased Games</a> 
-    <a href="{{ route('company.topSellingGames') }}" class="btn btn-info mt-3">Top Selling Games by Company</a>
-    <a href="{{ route('category.topCategories') }}" class="btn btn-danger mt-3">Top Categories With Most Games</a>
+    <h1>{{ __('Welcome to PIXEL PLAZA') }}</h1>
+    <a href="{{ route('game.index') }}" class="btn btn-primary mt-3">{{ __('View Games') }}</a>
+    <a href="{{ route('game.shoppingCart') }}" class="btn btn-secondary mt-3">{{ __('View Shopping Cart') }}</a>
+    <a href="{{ route('game.mostPurchased') }}" class="btn btn-success mt-3">{{ __('Most Purchased Games') }}</a> 
+    <a href="{{ route('company.topSellingGames') }}" class="btn btn-info mt-3">{{ __('Top Selling Games by Company') }}</a>
+    <a href="{{ route('category.topCategories') }}" class="btn btn-danger mt-3">{{ __('Top Categories With Most Games') }}</a>
 </div>
 <div class="container">
     <div class="row justify-content-center">

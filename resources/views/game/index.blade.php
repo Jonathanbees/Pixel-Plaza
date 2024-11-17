@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <!-- Jonathan, Samuel -->
-@section('title', "PIXEL PLAZA - List of games")
+@section('title', __('PIXEL PLAZA - List of games'))
 @section('styles')
     <link href="{{ asset('css/index_products.css') }}" rel="stylesheet">
 @endsection
@@ -17,11 +17,10 @@
         <div class="col-md-12">
             <form action="{{ route('game.search') }}" method="GET">
                 <div class="input-group">
-                    <input type="text" name="query" class="form-control" placeholder="Search by name or company" value="{{ request('query') }}">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                    <a href="{{ route('game.index') }}" class="btn btn-secondary">Reset</a> 
-                    <a href="{{ route('game.mostPurchased') }}" class="btn btn-warning">Most Purchased</a> 
-
+                    <input type="text" name="query" class="form-control" placeholder="{{ __('Search by name or company') }}" value="{{ request('query') }}">
+                    <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
+                    <a href="{{ route('game.index') }}" class="btn btn-secondary">{{ __('Reset') }}</a> 
+                    <a href="{{ route('game.mostPurchased') }}" class="btn btn-warning">{{ __('Most Purchased') }}</a> 
                 </div>
             </form>
         </div>
@@ -35,14 +34,14 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ $game->getName() }}</h5>
                     <div class="d-flex justify-content-between">
-                        <p class="card-text">Rating: {{ number_format($game->getRating(), 1) }}⭐</p>
-                        <p class="card-text">Price: {{ $game->getPrice() }}$</p>
+                        <p class="card-text">{{ __('Rating') }}: {{ number_format($game->getRating(), 1) }}⭐</p>
+                        <p class="card-text">{{ __('Price') }}: {{ $game->getPrice() }}$</p>
                     </div>
                     <div class="btn-group" role="group">
-                        <a href="{{ route('game.show', ['id'=> $game->getId()]) }}" class="btn bg-primary text-white">View</a>
+                        <a href="{{ route('game.show', ['id'=> $game->getId()]) }}" class="btn bg-primary text-white">{{ __('View') }}</a>
                         <form action="{{ route('game.addToShoppingCart', ['id' => $game->getId()]) }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-success">Add to cart</button>
+                            <button type="submit" class="btn btn-success">{{ __('Add to cart') }}</button>
                         </form>
                     </div>
                 </div>
