@@ -1,46 +1,39 @@
-# Use the official PHP image as a base image
-FROM php:8.2-fpm
+# Usa una imagen base de PHP con Apache
+FROM php:8.2-apache
 
-# Set working directory
-WORKDIR /var/www
-
-# Install system dependencies
+# Instala extensiones necesarias para Laravel
 RUN apt-get update && apt-get install -y \
-    build-essential \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl \
-    libzip-dev \
-    libpq-dev \
     libonig-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+    libxml2-dev \
+    zip \
+    unzip \
+    curl \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring zip exif pcntl
+# Habilita mod_rewrite en Apache
+RUN a2enmod rewrite
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Copia los archivos del proyecto al contenedor
+COPY . /var/www/html
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Establece el directorio de trabajo
+WORKDIR /var/www/html
 
-# Copy the existing application directory contents to the working directory
-COPY . /var/www
+# Cambia permisos para los directorios necesarios
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Copy the existing application directory permissions to the working directory
-COPY --chown=www-data:www-data . /var/www
+# Instala Composer
+COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Change current user to www
-USER www-data
+# Instala dependencias con Composer
+RUN composer install --no-dev --optimize-autoloader
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Configura el puerto que expondrá Apache
+EXPOSE 80
+
+# Define el comando para iniciar Apache
+CMD ["apache2-foreground"]
