@@ -92,7 +92,7 @@
                     <h5 class="text-uppercase text-white title-footer">{{ __('Online Store') }}</h5>
                     @auth
                         <p class="text-white">
-                            Logged as: {{ Auth::user()->getName() }}
+                            {{ __('Logged as') }} : {{ Auth::user()->getName() }}
                             @if(Auth::user()->is_admin)
                                 (Admin)
                             @endif

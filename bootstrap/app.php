@@ -18,8 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Registra primero el middleware de sesión
-        $middleware->append(StartSession::class);
 
         // Luego, registra tu LanguageMiddleware
         $middleware->append(LanguageMiddleware::class);
