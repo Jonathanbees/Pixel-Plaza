@@ -19,10 +19,10 @@ class LanguageMiddleware
         // Utiliza Log::info para depuración
         Log::info('LanguageMiddleware: handle() ejecutado');
         if (Session::has('locale')) {
-            \App::setLocale(Session::get('locale'));
+            App::setLocale(Session::get('locale'));
         } else {
             // Establecer el idioma predeterminado si no está en sesión
-            \App::setLocale(config('app.locale'));
+            App::setLocale(config('app.locale'));
         }
 
         return $next($request);

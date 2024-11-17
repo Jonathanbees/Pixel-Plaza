@@ -1,32 +1,27 @@
 <?php
 
+// Esteban, Jonathan
+
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\LanguageMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Ruta para cambiar el idioma
-Route::get('lang/{locale}', 'App\Http\Controllers\LocaleController@setLocale')->name('locale.setLocale');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
 
-// Envolver todas las rutas en el middleware de idioma
-Route::middleware([LanguageMiddleware::class])->group(function () {
-    Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
+// ========================== GUEST USER =================================
+// Games (Accessible by anyone)
+Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
+Route::get('/games/search', 'App\Http\Controllers\GameController@search')->name('game.search');
+Route::get('/games/most-purchased', 'App\Http\Controllers\GameController@mostPurchased')->name('game.mostPurchased');
 
-    // ========================== GUEST USER =================================
-    // Games (Accessible by anyone)
-    Route::get('/games', 'App\Http\Controllers\GameController@index')->name('game.index');
-    Route::get('/games/search', 'App\Http\Controllers\GameController@search')->name('game.search');
-    Route::get('/games/most-purchased', 'App\Http\Controllers\GameController@mostPurchased')->name('game.mostPurchased');
+// Categories
+Route::get('/categories/top-categories', 'App\Http\Controllers\CategoryController@topCategories')->name('category.topCategories');
 
-    // Categories
-    Route::get('/categories/top-categories', 'App\Http\Controllers\CategoryController@topCategories')->name('category.topCategories');
-
-    // Company
-    Route::get('/companies/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
-});
+// Company
+Route::get('/companies/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
 
 // ========================== AUTH USER =================================
-Route::middleware(['auth',LanguageMiddleware::class])->group(function () {
+Route::middleware(['auth'])->group(function () {
     // Games
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
     Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');
@@ -39,11 +34,12 @@ Route::middleware(['auth',LanguageMiddleware::class])->group(function () {
     Route::post('/orders/create', 'App\Http\Controllers\OrderController@create')->name('order.create');
     Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('order.show');
 });
-Route::middleware([LanguageMiddleware::class])->group(function () {
-    Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show'); //GAMES NEEDS TO BE HERE
-});
+
+// Games again, guest user. This NEEDS to be here, or the "/games/<something>" routes will not work.
+Route::get('/games/{id}', 'App\Http\Controllers\GameController@show')->name('game.show');
+
 // ========================== ADMIN ================================
-Route::middleware(['auth', AdminMiddleware::class, LanguageMiddleware::class])->group(function () {
+Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Games (User)
     Route::post('/games/{id}/generate-balance', 'App\Http\Controllers\GameController@generateBalance')->name('game.generateBalance');
 
@@ -82,5 +78,4 @@ Route::middleware(['auth', AdminMiddleware::class, LanguageMiddleware::class])->
 
 // ========================== ERRORS =================================
 Route::get('/errors/nonexistent', 'App\Http\Controllers\ErrorController@nonexistent')->name('error.nonexistent');
-
 Auth::routes();
