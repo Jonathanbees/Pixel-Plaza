@@ -8,18 +8,18 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
-                    <h4>Category Details</h4>
+                    <h4>{{ __('Category Details') }}</h4>
                 </div>
                 <div class="card-body">
-                    <p><strong>ID:</strong> {{ $viewData['category']->getId() }}</p>
-                    <p><strong>Name:</strong> {{ $viewData['category']->getName() }}</p>
-                    <p><strong>Description:</strong> {{ $viewData['category']->getDescription() }}</p>
+                    <p><strong>{{ __('ID:') }}</strong> {{ $viewData['category']->getId() }}</p>
+                    <p><strong>{{ __('Name:') }}</strong> {{ $viewData['category']->getName() }}</p>
+                    <p><strong>{{ __('Description:') }}</strong> {{ $viewData['category']->getDescription() }}</p>
                 </div>
                 <div class="card-footer text-center">
                     <form action="{{ route('admin-category.destroy', ['id'=> $viewData['category']->getId()]) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                     </form>
                 </div>
             </div>

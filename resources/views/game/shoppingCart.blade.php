@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Shopping Cart')
+@section('title', __('Shopping Cart'))
 
 @section('styles')
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
@@ -12,15 +12,15 @@
         <div class="d-flex justify-content-center mb-3">
             <form action="{{ route('order.create') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-primary">Order Now</button>
+                <button type="submit" class="btn btn-primary">{{ __('Order Now') }}</button>
             </form>
         </div>
         <div class="list-group">
             <div class="list-group-item list-group-item-action active">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-1">Game ID</h5>
-                    <strong class="text-muted">Name</strong>
-                    <strong class="text-muted">Price</strong>
+                    <h5 class="mb-1">{{ __('Game ID') }}</h5>
+                    <strong class="text-muted">{{ __('Name') }}</strong>
+                    <strong class="text-muted">{{ __('Price') }}</strong>
                 </div>
             </div>
             @foreach ($viewData['games'] as $game)
@@ -34,7 +34,7 @@
             @endforeach
         </div>
     @else
-        <h1 class="text-center">Your shopping cart is empty.</h1>
+        <h1 class="text-center">{{ __('Your shopping cart is empty.') }}</h1>
     @endif
 </div>
 @endsection
