@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
+# Cambia el DocumentRoot de Apache para que apunte a la carpeta public de Laravel
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+
 # Habilita mod_rewrite en Apache
 RUN a2enmod rewrite
 
@@ -35,5 +38,5 @@ RUN composer install --no-dev --optimize-autoloader
 # Configura el puerto que expondrá Apache
 EXPOSE 80
 
-# Define el comando para iniciar Apache
+# Define el comando para iniciar Apache en primer plano
 CMD ["apache2-foreground"]
