@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'Create Category')
+@section('title', __('Create Category'))
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">Create Category</div>
+        <div class="card-header">{{ __('Create Category') }}</div>
           <div class="card-body">
             @if($errors->any())
             <ul id="errors" class="alert alert-danger list-unstyled">
@@ -17,9 +17,9 @@
 
             <form method="POST" action="{{ route('admin-category.save') }}">
               @csrf
-              <input type="text" class="form-control mb-2" placeholder="Enter name" name="name" value="{{ old('name') }}" />
-              <input type="text" class="form-control mb-2" placeholder="Enter description" name="description" value="{{ old('description') }}" />
-              <input type="submit" class="btn btn-primary" value="Send" />
+              <input type="text" class="form-control mb-2" placeholder="{{ __('Enter name') }}" name="name" value="{{ old('name') }}" />
+              <input type="text" class="form-control mb-2" placeholder="{{ __('Enter description') }}" name="description" value="{{ old('description') }}" />
+              <input type="submit" class="btn btn-primary" value="{{ __('Send') }}" />
             </form>
           </div>
         </div>

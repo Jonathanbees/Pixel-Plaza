@@ -58,14 +58,14 @@
                                     Admin
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('admin-game.index') }}">Games</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-game.create') }}">Create Game</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-custom-user.index') }}">Users</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-custom-user.create') }}">Create User</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-category.index') }}">Categories</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-category.create') }}">Create Category</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-review.index') }}">Reviews</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin-review.create') }}">Create Review</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-game.index') }}">{{ __('Games') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-game.create') }}">{{ __('Create Game') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-custom-user.index') }}">{{ __('Users') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-custom-user.create') }}">{{ __('Create User') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-category.index') }}">{{ __('Categories') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-category.create') }}">{{ __('Create Category') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-review.index') }}">{{ __('Reviews') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin-review.create') }}">{{ __('Create Review') }}</a></li>
                                 </ul>
                             </div>
                         @endif
