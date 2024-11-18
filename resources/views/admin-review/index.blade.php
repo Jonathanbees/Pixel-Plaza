@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Reviews - PIXEL PLAZA')
-@section('subtitle', 'List of reviews')
+@section('title', __('Reviews - PIXEL PLAZA'))
+@section('subtitle', __('List of reviews'))
 
 @section('content')
 <div class="container mt-4">

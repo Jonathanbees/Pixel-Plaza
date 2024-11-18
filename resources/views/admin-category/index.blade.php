@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Categories - Admin')
+@section('title', __('Categories - Admin'))
 @section('content')
 
 <div class="container mt-4">
@@ -12,15 +12,15 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3>Categories</h3>
+          <h3>{{ __('Categories') }}</h3>
         </div>
         <div class="card-body">
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col"># of Games</th>
+                <th scope="col">{{ __('ID') }}</th>
+                <th scope="col">{{ __('Name') }}</th>
+                <th scope="col">{{ __('# of Games') }}</th>
               </tr>
             </thead>
             <tbody>

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\LanguageMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Auth\Middleware\Authenticate as AuthMiddleware;
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
@@ -11,10 +13,15 @@ $dotenv->load();
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Luego, registra tu LanguageMiddleware
+        $middleware->append(LanguageMiddleware::class);
+
+        // Finalmente, registra otros middlewares, como el AdminMiddleware
         $middleware->append(AdminMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {

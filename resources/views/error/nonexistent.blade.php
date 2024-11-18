@@ -10,8 +10,8 @@
 <div class="container"> 
   <div class="row"> 
     <div class="col-lg-4 mx-auto"> 
-      <h1 class="lead">That {{ $viewData["objectType"] ?? 'object' }} doesn't exist</h1> 
-      <img src="https://i.ytimg.com/vi/fEHcsNmu6Yc/mqdefault.jpg" alt="kanye west seeing your bs search">
+      <h1 class="lead">{{ __('That :objectType doesn\'t exist', ['objectType' => $viewData["objectType"] ?? 'object']) }}</h1> 
+      <img src="https://i.ytimg.com/vi/fEHcsNmu6Yc/mqdefault.jpg" alt="{{ __('kanye west seeing your bs search') }}">
     </div>
   </div> 
 </div> 
