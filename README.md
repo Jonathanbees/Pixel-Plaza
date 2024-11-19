@@ -1,5 +1,17 @@
 # Pixel Plaza
 
+### Development Team:
+- Esteban Vergara Giraldo
+- Jonathan Betancur Espinosa
+- Samuel Rendón Trujillo
+
+### Deployment at: 
+http://pixel-plaza.online
+
+### API consumption at: 
+http://pixel-plaza.online/api/games  
+http://pixel-plaza.online/api/games/{id}
+
 ## Getting Started
 
 Follow these instructions to get the project up and running on your local machine.
@@ -38,6 +50,7 @@ Follow these instructions to get the project up and running on your local machin
     DB_PASSWORD=your_database_password
 
     GEMINI_API_KEY=your_gemini_api_key
+    HUGGINGFACE_API_KEY=your_huggingface_api_key
     ```
 
 5. **Run the migrations:**
