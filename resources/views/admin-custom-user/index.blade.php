@@ -29,7 +29,7 @@
                             <h5 class="mb-1">{{ $user->getId() }}</h5>
                             <small class="text-muted">{{ $user->getName() }}</small>
                             <small class="text-muted">{{ $user->getEmail() }}</small>
-                            <small class="text-muted">{{ $user->getIsAdmin() }}</small>
+                            <small class="text-muted">{{ $user->getIsAdmin() ? '✓' : '' }}</small>
                         </div>
                     </a>
                 @endforeach

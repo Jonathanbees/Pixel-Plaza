@@ -1,6 +1,6 @@
 <?php
 
-//Jonathan
+// Jonathan, Esteban
 
 namespace App\Http\Controllers\Auth;
 
@@ -49,13 +49,10 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $data['is_admin'] = isset($data['is_admin']) && $data['is_admin'] === 'on';
-
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'is_admin' => ['boolean'],
         ]);
     }
 
@@ -66,13 +63,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $data['is_admin'] = isset($data['is_admin']) && $data['is_admin'] === 'on';
-
         return CustomUser::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'is_admin' => $data['is_admin'],
+            'is_admin' => false,
         ]);
     }
 }

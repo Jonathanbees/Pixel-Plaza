@@ -47,6 +47,16 @@ class CustomUser extends Model implements AuthenticatableContract
         ]);
     }
 
+    public static function createAdmin(): void
+    {
+        $admin = new CustomUser;
+        $admin->setName('admin');
+        $admin->setEmail('admin@admin.com');
+        $admin->setPassword('admin');
+        $admin->setIsAdmin(true);
+        $admin->save();
+    }
+
     public function getId(): int
     {
         return $this->attributes['id'];
