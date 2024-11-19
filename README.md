@@ -6,11 +6,11 @@
 - Samuel Rendón Trujillo
 
 ### Deployment at: 
-http://pixel-plaza.online
+http://pixel-plaza.online/public
 
 ### API consumption at: 
-http://pixel-plaza.online/api/games  
-http://pixel-plaza.online/api/games/{id}
+http://pixel-plaza.online/public/api/games  
+http://pixel-plaza.online/public/api/games/{id}
 
 ## Getting Started
 
