@@ -26,6 +26,7 @@ jobs:
         sed -i 's/DB_DATABASE=laravel/DB_DATABASE=pixel-plaza-bd/' .env
         sed -i 's/DB_USERNAME=root/DB_USERNAME=pixelplaza/' .env
         sed -i 's/DB_PASSWORD=/DB_PASSWORD=pixelplazapass/' .env
+        sed -i 's/DB_HOST=127.0.0.1/DB_HOST=34.46.49.118/' .env
         echo "GEMINI_API_KEY=${{secrets.GEMINI_API_KEY}}" >> .env
         echo "HUGGINGFACE_API_KEY=${{secrets.HUGGINGFACE_API_KEY}}" >> .env
     - name: Build the Docker image 

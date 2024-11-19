@@ -11,6 +11,7 @@ RUN cp .env.example .env
 RUN sed -i 's/DB_DATABASE=laravel/DB_DATABASE=pixel-plaza-bd/' .env
 RUN sed -i 's/DB_USERNAME=root/DB_USERNAME=pixelplaza/' .env
 RUN sed -i 's/DB_PASSWORD=/DB_PASSWORD=pixelplazapass/' .env
+RUN sed -i 's/DB_HOST=127.0.0.1/DB_HOST=34.46.49.118/' .env
 RUN echo "GEMINI_API_KEY=${GEMINI_API_KEY}" >> .env
 RUN echo "HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}" >> .env
 
