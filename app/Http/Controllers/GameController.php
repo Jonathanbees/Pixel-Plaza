@@ -44,8 +44,13 @@ class GameController extends Controller
         $cart = session()->get('cart', []);
         $games = Game::find($cart);
 
+        $totalPrice = $games->sum(function ($game) {
+            return $game->getPrice();
+        });
+
         $viewData = [];
         $viewData['games'] = $games;
+        $viewData['totalPrice'] = $totalPrice;
 
         return view('game.shoppingCart')->with('viewData', $viewData);
     }

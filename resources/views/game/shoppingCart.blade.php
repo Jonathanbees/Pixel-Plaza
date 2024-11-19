@@ -32,6 +32,13 @@
                     </div>
                 </a>
             @endforeach
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ __('Total') }}</h5>
+                    <strong class="text-muted"></strong>
+                    <strong class="text-muted">{{ $viewData['totalPrice'] }}$</strong>
+                </div>
+            </div>
         </div>
     @else
         <h1 class="text-center">{{ __('Your shopping cart is empty.') }}</h1>
