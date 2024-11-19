@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Route;
 // Language change route
 Route::get('lang/{locale}', 'App\Http\Controllers\LocaleController@setLocale')->name('locale.setLocale');
 
-
 // ========================== GUEST USER =================================
 Route::middleware([LanguageMiddleware::class])->group(function () {
     Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
@@ -25,11 +24,11 @@ Route::middleware([LanguageMiddleware::class])->group(function () {
     Route::get('/companies/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
 
     // Partners store
-    Route::get('/partners/index', 'App\Http\Controllers\External\PartnersStoreController@index')->name('partner.index');
+    Route::get('/partners/index', 'App\Http\Controllers\Service\PartnersStoreController@index')->name('partner.index');
 });
 
 // ========================== AUTH USER =================================
-Route::middleware(['auth',LanguageMiddleware::class])->group(function () {
+Route::middleware(['auth', LanguageMiddleware::class])->group(function () {
     // Games
     Route::get('/games/shopping-cart', 'App\Http\Controllers\GameController@shoppingCart')->name('game.shoppingCart');
     Route::post('/games/add-to-cart/{id}', 'App\Http\Controllers\GameController@addToShoppingCart')->name('game.addToShoppingCart');

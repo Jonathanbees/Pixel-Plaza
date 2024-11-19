@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/games', 'App\Http\Controllers\Api\GameApiController@index')->name('api.game.index');
-Route::get('/games/{id}', 'App\Http\Controllers\Api\GameApiController@show')->name('api.game.show'); 
+Route::get('/games/{id}', 'App\Http\Controllers\Api\GameApiController@show')->name('api.game.show');

@@ -43,7 +43,6 @@ class GameController extends Controller
     {
         $cart = session()->get('cart', []);
         $games = Game::find($cart);
-        
 
         $viewData = [];
         $viewData['games'] = $games;

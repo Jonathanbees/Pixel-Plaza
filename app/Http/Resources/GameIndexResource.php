@@ -18,7 +18,7 @@ class GameIndexResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'image' => $this->image,
-            'price' => $this->price
+            'price' => $this->price,
         ];
     }
 }

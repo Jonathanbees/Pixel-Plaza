@@ -5,7 +5,6 @@ use App\Http\Middleware\LanguageMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Auth\Middleware\Authenticate as AuthMiddleware;
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();

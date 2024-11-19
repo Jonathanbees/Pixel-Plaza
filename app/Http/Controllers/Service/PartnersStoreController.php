@@ -4,9 +4,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\View\View;
 
 class PartnersStoreController extends Controller
 {
@@ -38,7 +37,7 @@ class PartnersStoreController extends Controller
             ]
         }';
         $decodedFakeResponse = json_decode($responseFake, true);
-        
+
         $products = $decodedFakeResponse['data'];
 
         $viewData = [];
@@ -46,7 +45,7 @@ class PartnersStoreController extends Controller
 
         //dd($viewData);
 
-        return view('partners-products.index') -> with('viewData', $viewData); 
+        return view('partners-products.index')->with('viewData', $viewData);
 
     }
 }
