@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Utils;
+namespace App\Util;
 
-class FormattingUtils
+class FormattingUtil
 {
     public static function convertMarkdownToHtml(string $markdown): string
     {

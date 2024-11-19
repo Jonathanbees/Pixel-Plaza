@@ -4,10 +4,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\BalanceGenerator;
 use App\Models\Game;
-use App\Utils\FormattingUtils;
 use Exception;
-use Gemini;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -96,26 +95,17 @@ class GameController extends Controller
         return view('game.mostPurchased')->with('viewData', $viewData);
     }
 
-    public function generateBalance(Request $request, string $id): RedirectResponse
+    public function generateBalance(Request $request, string $id, string $type): RedirectResponse
     {
         try {
             $game = Game::findOrFail($id);
-            $reviews = $game->getReviews();
-            $comments = $reviews->pluck('comment')->implode(' | ');
 
-            $prompt = "Generate a summary of the balance of the next comments about the game {$game->getName()} that has a rating of {$game->getRating()}, also, say the reasons of the good and bad comments, that's the vital part: {$comments}";
-
-            $apiKey = env('GEMINI_API_KEY');
-            $client = Gemini::client($apiKey);
-
-            $result = $client->geminiPro()->generateContent($prompt);
-
-            $balanceMarkdown = $result->text();
-            $balanceHtml = FormattingUtils::convertMarkdownToHtml($balanceMarkdown);
+            $balanceGenerator = app(BalanceGenerator::class, ['type' => $type]);
+            $balanceHtml = $balanceGenerator->generateBalance($game);
 
             $game->setBalance($balanceHtml);
             $game->setBalanceDate(now());
-            $game->setBalanceReviewsCount($reviews->count());
+            $game->setBalanceReviewsCount($game->getReviews()->count());
             $game->save();
 
             return redirect()->route('game.show', ['id' => $id])->with('viewData', ['success' => 'Balance generated successfully!']);
@@ -124,5 +114,15 @@ class GameController extends Controller
 
             return redirect()->route('error.nonexistent')->with('viewData', $viewData);
         }
+    }
+
+    public function generateBalanceGemini(Request $request, string $id): RedirectResponse
+    {
+        return $this->generateBalance($request, $id, 'gemini');
+    }
+
+    public function generateBalanceHuggingFace(Request $request, string $id): RedirectResponse
+    {
+        return $this->generateBalance($request, $id, 'huggingface');
     }
 }

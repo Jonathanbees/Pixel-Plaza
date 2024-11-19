@@ -47,7 +47,8 @@ Route::middleware([LanguageMiddleware::class])->group(function () {
 // ========================== ADMIN ================================
 Route::middleware(['auth', AdminMiddleware::class, LanguageMiddleware::class])->group(function () {
     // Games (User)
-    Route::post('/games/{id}/generate-balance', 'App\Http\Controllers\GameController@generateBalance')->name('game.generateBalance');
+    Route::post('/games/{id}/generate-balance-gemini', 'App\Http\Controllers\GameController@generateBalanceGemini')->name('game.generateBalanceGemini');
+    Route::post('/games/{id}/generate-balance-huggingface', 'App\Http\Controllers\GameController@generateBalanceHuggingFace')->name('game.generateBalanceHuggingFace');
 
     // Games (Admin)
     Route::get('/admin/games', 'App\Http\Controllers\Admin\AdminGameController@index')->name('admin-game.index');
