@@ -32,6 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     @include('partials.language-selector')
+                    <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
                     <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
                     <a class="nav-link" href="{{ route('game.index') }}">{{ __('Games') }}</a>
                     <a class="nav-link" href="{{ route('partner.index') }}">{{ __('Partner Products') }}</a>
