@@ -1,22 +1,19 @@
-FROM php:8.2-fpm
-
-# Instalar extensiones y herramientas necesarias
-RUN apt-get update && apt-get install -y \
-    curl \
-    libpq-dev \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-install pdo pdo_mysql zip
-
-# Instalar Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
-
-# Copiar el código del proyecto
+FROM php:8.3.11-apache
+RUN apt-get update -y && apt-get install -y openssl zip unzip git 
+RUN docker-php-ext-install pdo_mysql
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY . /var/www/html
+COPY ./public/.htaccess /var/www/html/.htaccess
 WORKDIR /var/www/html
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --prefer-dist
 
-# Exponer el puerto 8000
-EXPOSE 8000
-
-CMD ["php", "artisan", "migrate"]
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+RUN php artisan key:generate
+RUN php artisan migrate
+RUN chmod -R 777 storage
+RUN a2enmod rewrite
+RUN service apache2 restart
