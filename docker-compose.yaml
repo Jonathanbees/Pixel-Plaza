@@ -1,42 +1,40 @@
-version: '2.2'
+version: '3.8'
 
 services:
-  # Servicio para la aplicación Laravel
   app:
-    build: .
-    container_name: pixelplaza-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
     ports:
-      - "8080:80"
+      - "8000:8000"
     volumes:
       - .:/var/www/html
-    networks:
-      - pixelplaza-network
     depends_on:
       - mysql
     environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=
+      - DB_CONNECTION=mysql
       - DB_HOST=mysql
       - DB_PORT=3306
-      - DB_DATABASE=pixelplaza
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
+      - DB_DATABASE=laravel
+      - DB_USERNAME=laravel
+      - DB_PASSWORD=laravel
 
-  # Servicio para MySQL
   mysql:
-    image: mysql:5.7
-    container_name: pixelplaza-mysql
+    image: mysql:8.0
+    container_name: laravel-mysql
+    ports:
+      - "3306:3306"
     environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pixelplaza
     volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - pixelplaza-network
+      - mysql_data:/var/lib/mysql
 
-# Volúmenes para persistir los datos de MySQL
 volumes:
-  mysql-data:
-
-# Redes para que los servicios puedan comunicarse entre sí
-networks:
-  pixelplaza-network:
-    driver: bridge
+  mysql_data:
