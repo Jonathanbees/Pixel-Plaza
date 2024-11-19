@@ -1,11 +1,15 @@
 <?php
 
+// Jonathan
+
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\Response;
 
 class LanguageMiddleware
 {
@@ -14,14 +18,12 @@ class LanguageMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        // Utiliza Log::info para depuración
-        Log::info('LanguageMiddleware: handle() ejecutado');
+        Log::info('LanguageMiddleware: handle() executed');
         if (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
         } else {
-            // Establecer el idioma predeterminado si no está en sesión
             App::setLocale(config('app.locale'));
         }
 
