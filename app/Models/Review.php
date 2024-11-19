@@ -20,8 +20,8 @@ class Review extends Model
      * $this->attributes['comment'] - string - contains the review comment
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->customUser - CustomUser - contains the associated CustomUser
-     * $this->game - Game - contains the associated Game
+     * $this->customUser - CustomUser - contains the associated CustomUser. (Foreign key)
+     * $this->game - Game - contains the associated Game. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -70,6 +70,7 @@ class Review extends Model
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function customUser(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class);
@@ -85,6 +86,7 @@ class Review extends Model
         $this->customUser()->associate($customUser);
     }
 
+    // Foreign key
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);

@@ -21,7 +21,7 @@ class Category extends Model
      * $this->attributes['description'] - string - contains the category description
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->games - Game[] - contains the games associated with the category
+     * $this->games - Game[] - contains the games associated with the category. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -68,6 +68,7 @@ class Category extends Model
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'game_category');

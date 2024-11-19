@@ -26,9 +26,9 @@ class CustomUser extends Model implements AuthenticatableContract
      * $this->attributes['is_admin'] - boolean - indicates if the user is an admin
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->company - Company - contains the associated Company (optional)
-     * $this->reviews - Review[] - contains the reviews associated with the custom user
-     * $this->orders - Order[] - contains the orders associated with the custom user
+     * $this->company - Company - contains the associated Company (optional). (Foreign key)
+     * $this->reviews - Review[] - contains the reviews associated with the custom user. (Foreign key)
+     * $this->orders - Order[] - contains the orders associated with the custom user. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -102,6 +102,7 @@ class CustomUser extends Model implements AuthenticatableContract
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function company(): HasOne
     {
         return $this->hasOne(Company::class, 'custom_user_id');
@@ -117,6 +118,7 @@ class CustomUser extends Model implements AuthenticatableContract
         $this->company()->associate($company);
     }
 
+    // Foreign key
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
@@ -137,6 +139,7 @@ class CustomUser extends Model implements AuthenticatableContract
         $this->reviews()->detach($review);
     }
 
+    // Foreign key
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);

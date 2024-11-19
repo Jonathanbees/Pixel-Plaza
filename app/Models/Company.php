@@ -22,8 +22,8 @@ class Company extends Model
      * $this->attributes['address'] - string - contains the company address
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->user - CustomUser - contains the associated CustomUser (owner)
-     * $this->games - Game[] - contains the associated games
+     * $this->user - CustomUser - contains the associated CustomUser (owner). (Foreign key)
+     * $this->games - Game[] - contains the associated games. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -71,6 +71,7 @@ class Company extends Model
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function customUser(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'custom_user_id');
@@ -81,6 +82,12 @@ class Company extends Model
         return $this->customUser()->first();
     }
 
+    public function setCustomUser(CustomUser $customUser): void
+    {
+        $this->customUser()->associate($customUser);
+    }
+
+    // Foreign key
     public function games(): HasMany
     {
         return $this->hasMany(Game::class);

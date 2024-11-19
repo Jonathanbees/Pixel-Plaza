@@ -30,10 +30,10 @@ class Game extends Model
      * $this->attributes['balanceReviewsCount'] - int - contains the count of balance reviews
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->company - Company - contains the associated Company that owns the game
-     * $this->reviews - Review[] - contains the reviews associated with the game
-     * $this->categories - Category[] - contains the categories associated with the game
-     * $this->items - Item[] - contains the items associated with the game
+     * $this->company - Company - contains the associated Company that owns the game. (Foreign key)
+     * $this->reviews - Review[] - contains the reviews associated with the game. (Foreign key)
+     * $this->categories - Category[] - contains the categories associated with the game. (Foreign key)
+     * $this->items - Item[] - contains the items associated with the game. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -174,6 +174,7 @@ class Game extends Model
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -189,6 +190,7 @@ class Game extends Model
         $this->company()->associate($company);
     }
 
+    // Foreign key
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
@@ -211,6 +213,7 @@ class Game extends Model
         $this->decrementReviewStats($review->getRating());
     }
 
+    // Foreign key
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'game_category');
@@ -231,6 +234,7 @@ class Game extends Model
         $this->categories()->detach($category);
     }
 
+    // Foreign key
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);

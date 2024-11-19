@@ -20,8 +20,8 @@ class Order extends Model
      * $this->attributes['total_price'] - float - contains the total price of the order
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->customUser - CustomUser - contains the associated CustomUser
-     * $this->items - Item[] - contains the items associated with the order
+     * $this->customUser - CustomUser - contains the associated CustomUser. (Foreign key)
+     * $this->items - Item[] - contains the items associated with the order. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -58,6 +58,7 @@ class Order extends Model
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function customUser(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class);
@@ -73,6 +74,7 @@ class Order extends Model
         $this->customUser()->associate($customUser);
     }
 
+    // Foreign key
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);

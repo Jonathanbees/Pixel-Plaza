@@ -20,8 +20,8 @@ class Item extends Model
      * $this->attributes['price'] - float - contains the price of the item
      * $this->attributes['created_at'] - timestamp - contains the creation date
      * $this->attributes['updated_at'] - timestamp - contains the last update date
-     * $this->order - Order - contains the associated Order
-     * $this->game - Game - contains the associated Game
+     * $this->order - Order - contains the associated Order. (Foreign key)
+     * $this->game - Game - contains the associated Game. (Foreign key)
      */
     protected $guarded = ['id'];
 
@@ -70,6 +70,7 @@ class Item extends Model
         return $this->attributes['updated_at'];
     }
 
+    // Foreign key
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -85,6 +86,7 @@ class Item extends Model
         $this->order()->associate($order);
     }
 
+    // Foreign key
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
