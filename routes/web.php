@@ -23,6 +23,9 @@ Route::middleware([LanguageMiddleware::class])->group(function () {
 
     // Company
     Route::get('/companies/top-selling', 'App\Http\Controllers\CompanyController@topSellingGames')->name('company.topSellingGames');
+
+    // Partners store
+    Route::get('partners/index', 'App\Http\Controllers\PartnersStoreController@index')->name('partner.index');
 });
 
 // ========================== AUTH USER =================================

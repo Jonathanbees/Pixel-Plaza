@@ -34,6 +34,7 @@
                     @include('partials.language-selector')
                     <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
                     <a class="nav-link" href="{{ route('game.index') }}">{{ __('Games') }}</a>
+                    <a class="nav-link" href="{{ route('partner.index') }}">{{ __('Partner Products') }}</a>
                     @auth
                         <a class="nav-link active" href="{{ route('order.index') }}">{{ __('Orders') }}</a> 
                     @endauth
