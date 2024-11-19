@@ -2,15 +2,22 @@
 
 // Esteban, Samuel
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Service;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class PartnersStoreController extends Controller
 {
+    // Por ejemplo así (leer lo de abajo primero)
+    protected static $partnersServiceUri = 'http://partners-store.online:8000/api/products';
+
     public function index(): View
     {
+        // No creo que sea buena idea ponerlo en el .env
+        // tocaría mover varias cosas del dockerfile y el workflow de creación de la imagen.
+        // Hasta toca ponerla como secreto en el repo. Mejor quémalo! (línea 14) - Esteban
         $baseUrl = env('PARTNERS_SERVICE_URI');
 
         //$response = Http::get($baseUrl . 'api/products');

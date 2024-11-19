@@ -2,8 +2,9 @@
 
 // Esteban
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\CustomUser;
 use App\Models\Game;
 use App\Models\Review;

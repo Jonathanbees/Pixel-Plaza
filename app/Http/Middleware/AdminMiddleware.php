@@ -20,9 +20,8 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {
         if (Auth::check()) {
-            // if (Auth::user()->getIsAdmin()) {
-            // It didn't work. There's no direct connection between the customUser model (with the function) and the user here, so it's not accessible.
-            if (Auth::user()->is_admin) {
+            // Intelephense is not recognizing getIsAdmin() method, but it is working.
+            if (Auth::user()->getIsAdmin()) {
                 return $next($request);
             } else {
                 return redirect()->route('home.index');
