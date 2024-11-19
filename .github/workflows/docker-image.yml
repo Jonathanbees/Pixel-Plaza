@@ -1,17 +1,17 @@
-name: Docker Image CI 
- 
+name: Docker Image CI
+
 on:  
   push: 
     branches: [ main ] 
   pull_request: 
     branches: [ main ] 
- 
+
 jobs: 
- 
+
   build: 
- 
+
     runs-on: ubuntu-latest 
- 
+
     steps: 
     - uses: actions/checkout@v2 
     - name: docker login 
@@ -20,6 +20,14 @@ jobs:
         DOCKER_PASS: ${{secrets.DOCKERHUB_PASS}} 
       run: | 
         docker login -u $DOCKER_USER -p $DOCKER_PASS 
+    - name: Set up .env file
+      run: |
+        cp .env.example .env
+        sed -i 's/DB_DATABASE=laravel/DB_DATABASE=pixel-plaza-bd/' .env
+        sed -i 's/DB_USERNAME=root/DB_USERNAME=pixelplaza/' .env
+        sed -i 's/DB_PASSWORD=/DB_PASSWORD=pixelplazapass/' .env
+        echo "GEMINI_API_KEY=${{secrets.GEMINI_API_KEY}}" >> .env
+        echo "HUGGINGFACE_API_KEY=${{secrets.HUGGINGFACE_API_KEY}}" >> .env
     - name: Build the Docker image 
       run: docker build . --file Dockerfile --tag quitotactico/pixel-plaza:latest 
        
