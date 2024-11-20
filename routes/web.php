@@ -1,11 +1,13 @@
 <?php
 
+// Esteban, Jonathan, Samuel
+
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\LanguageMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Language change route
+// ========================== LANGUAGE =================================
 Route::get('lang/{locale}', 'App\Http\Controllers\LocaleController@setLocale')->name('locale.setLocale');
 
 // ========================== GUEST USER =================================
@@ -86,4 +88,5 @@ Route::middleware(['auth', AdminMiddleware::class, LanguageMiddleware::class])->
 // ========================== ERRORS =================================
 Route::get('/errors/nonexistent', 'App\Http\Controllers\ErrorController@nonexistent')->name('error.nonexistent');
 
+// ========================== AUTH =================================
 Auth::routes();

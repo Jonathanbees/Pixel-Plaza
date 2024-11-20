@@ -22,7 +22,7 @@ class BalanceGemini implements BalanceGenerator
 
         $result = $client->geminiPro()->generateContent($prompt);
 
-        $balanceMarkdown = $result->text();
+        $balanceMarkdown = "**Made with Gemini**\n\n".$result->text();
         $balanceHtml = FormattingUtil::convertMarkdownToHtml($balanceMarkdown);
 
         return $balanceHtml;
