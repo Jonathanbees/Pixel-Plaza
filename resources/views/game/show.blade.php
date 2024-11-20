@@ -40,12 +40,12 @@
                         @if(Auth::user()->getIsAdmin())
                             <form action="{{ route('game.generateBalanceGemini', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance (Gemini)') }}</button>
+                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance') }} (Gemini) </button>
                             </form>
 
                             <form action="{{ route('game.generateBalanceHuggingFace', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance (HuggingFace)') }}</button>
+                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance') }} (HuggingFace)</button>
                             </form>
                         @endif
                     @endauth
