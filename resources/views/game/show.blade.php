@@ -37,10 +37,15 @@
                         <button type="submit" class="btn btn-primary">{{ __('Add to Cart') }}</button>
                     </form>
                     @auth
-                        @if(Auth::user()->is_admin)
-                            <form action="{{ route('game.generateBalance', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
+                        @if(Auth::user()->getIsAdmin())
+                            <form action="{{ route('game.generateBalanceGemini', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance') }}</button>
+                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance (Gemini)') }}</button>
+                            </form>
+
+                            <form action="{{ route('game.generateBalanceHuggingFace', ['id' => $viewData['game']->getId()]) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-secondary">{{ __('Generate Balance (HuggingFace)') }}</button>
                             </form>
                         @endif
                     @endauth

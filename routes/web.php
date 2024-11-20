@@ -1,11 +1,13 @@
 <?php
 
+// Esteban, Jonathan, Samuel
+
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\LanguageMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Language change route
+// ========================== LANGUAGE =================================
 Route::get('lang/{locale}', 'App\Http\Controllers\LocaleController@setLocale')->name('locale.setLocale');
 
 // ========================== GUEST USER =================================
@@ -47,7 +49,8 @@ Route::middleware([LanguageMiddleware::class])->group(function () {
 // ========================== ADMIN ================================
 Route::middleware(['auth', AdminMiddleware::class, LanguageMiddleware::class])->group(function () {
     // Games (User)
-    Route::post('/games/{id}/generate-balance', 'App\Http\Controllers\GameController@generateBalance')->name('game.generateBalance');
+    Route::post('/games/{id}/generate-balance-gemini', 'App\Http\Controllers\GameController@generateBalanceGemini')->name('game.generateBalanceGemini');
+    Route::post('/games/{id}/generate-balance-huggingface', 'App\Http\Controllers\GameController@generateBalanceHuggingFace')->name('game.generateBalanceHuggingFace');
 
     // Games (Admin)
     Route::get('/admin/games', 'App\Http\Controllers\Admin\AdminGameController@index')->name('admin-game.index');
@@ -85,4 +88,5 @@ Route::middleware(['auth', AdminMiddleware::class, LanguageMiddleware::class])->
 // ========================== ERRORS =================================
 Route::get('/errors/nonexistent', 'App\Http\Controllers\ErrorController@nonexistent')->name('error.nonexistent');
 
+// ========================== AUTH =================================
 Auth::routes();
